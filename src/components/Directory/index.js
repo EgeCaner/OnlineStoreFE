@@ -11,18 +11,18 @@ const Directory = (props) => {
         <div
           className="item"
           style={{
-            backgroundImage: `url(${ShopWomen})`,
+            backgroundImage: `url(https://www.techadvisor.com/cmsdata/slideshow/3214618/best_laptops_thumb800.jpg)`,
           }}
         >
-          <Link to="/search/womens">Shop Womens</Link>
+          <Link to="/search/laptops">Shop Laptops</Link>
         </div>
         <div
           className="item"
           style={{
-            backgroundImage: `url(${ShopMen})`,
+            backgroundImage: `url(https://azcd.harveynorman.com.au/media/wysiwyg/buying-guides/tvs-blue-ray-home-theatre/Samsung-smart-tv.jpg)`,
           }}
         >
-          <Link to="/search/mens">Shop Mens</Link>
+          <Link to="/search/televisions">Shop Televisions</Link>
         </div>
       </div>
     </div>

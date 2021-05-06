@@ -62,11 +62,11 @@ const ProductResults = ({}) => {
         value: "",
       },
       {
-        name: "Mens",
+        name: "Laptops",
         value: "mens",
       },
       {
-        name: "Womens",
+        name: "Televisions",
         value: "womens",
       },
     ],
