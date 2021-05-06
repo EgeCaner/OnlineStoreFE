@@ -1,7 +1,5 @@
 import React from "react"
 import {Link} from "react-router-dom"
-import ShopMen from "./../../assets/shopMens.png"
-import ShopWomen from "./../../assets/shopWomens.png"
 import "./styles.scss"
 
 const Directory = (props) => {
