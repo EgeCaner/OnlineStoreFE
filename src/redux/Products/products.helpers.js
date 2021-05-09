@@ -38,7 +38,11 @@ export const handleFetchProducts = ({
         console.log(snapshot)
         const dataInput = snapshot.data.data
         let dataInput1 = dataInput.filter((product) => {
-          return product.categoryId == filterType
+          if (filterType in ["1", "2", "3", "4", "5", "6", "7", "8"]) {
+            return product.categoryId == filterType
+          } else {
+            return product
+          }
         })
 
         const data = [...persistProducts, ...dataInput1]
