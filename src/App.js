@@ -1,47 +1,120 @@
-import logo from './logo.svg';
-import './App.css';
-import React, {useState} from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { Switch, Route } from 'react-router-dom';
+import { checkUserSession } from './redux/User/user.actions';
 
-function App() {
+// components
+import AdminToolbar from './components/AdminToolbar';
 
-  const [username,setUsername] = useState("");
-  const[email,setEmail] = useState("")
-  const[password,setPassword] = useState("")
+// hoc
+import WithAuth from './hoc/withAuth';
+import WithAdminAuth from './hoc/withAdminAuth';
 
-  const handleSubmit= (e) => {
-    e.preventDefault();
-    console.log(username,email,password);
+// layouts
+import MainLayout from './layouts/MainLayout';
+import HomepageLayout from './layouts/HomepageLayout';
+import AdminLayout from './layouts/AdminLayout';
+import DashboardLayout from './layouts/DashboardLayout';
 
-  }
+// pages
+import Homepage from './pages/Homepage';
+import Search from './pages/Search';
+import Registration from './pages/Registration';
+import Login from './pages/Login';
+import Recovery from './pages/Recovery';
+import Dashboard from './pages/Dashboard';
+import Admin from './pages/Admin';
+import ProductDetails from './pages/ProductDetails';
+import Cart from './pages/Cart';
+import Payment from './pages/Payment';
+import Order from './pages/Order';
+import './default.scss';
+
+const App = props => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(checkUserSession());
+
+  }, []);
 
   return (
-    <React.Fragment>
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <section className="section">
-<form className="form" onSubmit={handleSubmit}>
-  <div className="form-control">
-  <label htmlFor="username">Username</label>
-  <input className="form-input" type="text" id="username" name="username" value={username} onChange={(e)=> setUsername(e.target.value)}/>
-  </div>
-  <div className="form-control">
-  <label htmlFor="email">Email</label>
-  <input className="form-input" type="text" id="email" name="email" value={email} onChange={(e)=> setEmail(e.target.value)}/>
-  </div>
-  <div className="form-control">
-  <label htmlFor="username">Password</label>
-  <input className="form-input" type="text" id="password" name="password" value={password} onChange={(e)=> setPassword(e.target.value)}/>
-  </div>
-  <button className="answer-btn" type="submit ">Register</button>
-
-</form>
-
-
-        </section>
-            </header>
+      <AdminToolbar />
+      <Switch>
+        <Route exact path="/" render={() => (
+          <HomepageLayout>
+            <Homepage />
+          </HomepageLayout>
+        )}
+        />
+        <Route exact path="/search" render={() => (
+          <MainLayout>
+            <Search />
+          </MainLayout>
+        )} />
+        <Route path="/search/:filterType" render={() => (
+          <MainLayout>
+            <Search />
+          </MainLayout>
+        )} />
+        <Route path="/product/:productID" render={() => (
+          <MainLayout>
+            <ProductDetails />
+          </MainLayout>
+        )} />
+        <Route path="/cart" render={() => (
+          <MainLayout>
+            <Cart />
+          </MainLayout>
+        )} />
+        <Route path="/payment" render={() => (
+          <WithAuth>
+            <MainLayout>
+              <Payment />
+            </MainLayout>
+          </WithAuth>
+        )} />
+        <Route path="/registration" render={() => (
+          <MainLayout>
+            <Registration />
+          </MainLayout>
+        )} />
+        <Route path="/login"
+          render={() => (
+  
+            <MainLayout>
+              <Login />
+            </MainLayout>
+          )} />
+        <Route path="/recovery" render={() => (
+          <MainLayout>
+            <Recovery />
+          </MainLayout>
+        )} />
+        <Route path="/dashboard" render={() => (
+          <WithAuth>
+            <DashboardLayout>
+              <Dashboard />
+            </DashboardLayout>
+          </WithAuth>
+        )} />
+        <Route path="/order/:orderID" render={() => (
+          <WithAuth>
+            <DashboardLayout>
+              <Order />
+            </DashboardLayout>
+          </WithAuth>
+        )} />
+        <Route path="/admin" render={() => (
+          <WithAdminAuth>
+            <AdminLayout>
+              <Admin />
+            </AdminLayout>
+          </WithAdminAuth>
+        )} />
+      </Switch>
     </div>
-    </React.Fragment>
   );
 }
 
