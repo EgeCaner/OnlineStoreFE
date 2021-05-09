@@ -21,7 +21,7 @@ const Admin = (props) => {
   const {products} = useSelector(mapState)
   const dispatch = useDispatch()
   const [hideModal, setHideModal] = useState(true)
-  const [productCategory, setProductCategory] = useState("laptops")
+  const [productCategory, setProductCategory] = useState("0")
   const [productName, setProductName] = useState("")
   const [productThumbnail, setProductThumbnail] = useState("")
   const [productPrice, setProductPrice] = useState(0)
@@ -42,7 +42,7 @@ const Admin = (props) => {
 
   const resetForm = () => {
     setHideModal(true)
-    setProductCategory("laptops")
+    setProductCategory("0")
     setProductName("")
     setProductThumbnail("")
     setProductPrice(0)

@@ -27,15 +27,15 @@ const ProductResults = ({}) => {
     const nextFilter = e.target.value
     history.push(`/search/${nextFilter}`)
   }
-  /* 
-  if (!Array.isArray(data)) return null
+
+  /*if (!Array.isArray(data)) return null
   if (data.length < 1) {
     return (
       <div className="products">
         <p>No search results.</p>
       </div>
     )
-  } */
+  }*/
 
   const configFilters = {
     defaultValue: filterType,
@@ -46,11 +46,19 @@ const ProductResults = ({}) => {
       },
       {
         name: "Laptops",
-        value: "laptops",
+        value: "0",
       },
       {
         name: "Televisions",
-        value: "televisions",
+        value: "1",
+      },
+      {
+        name: "Cameras",
+        value: "2",
+      },
+      {
+        name: "Phones",
+        value: "3",
       },
     ],
     handleChange: handleFilter,

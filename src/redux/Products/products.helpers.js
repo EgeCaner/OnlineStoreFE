@@ -36,8 +36,12 @@ export const handleFetchProducts = ({
       .get("Product/getall")
       .then((snapshot) => {
         console.log(snapshot)
-        const data = [...persistProducts, ...snapshot.data.data]
-        console.log(data)
+        const dataInput = snapshot.data.data
+        let dataInput1 = dataInput.filter((product) => {
+          return product.categoryId == filterType
+        })
+
+        const data = [...persistProducts, ...dataInput1]
         resolve({
           data,
           /*           queryDoc: snapshot.docs[totalCount - 1],
