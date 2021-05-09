@@ -16,7 +16,7 @@ import HomepageLayout from './layouts/HomepageLayout';
 import AdminLayout from './layouts/AdminLayout';
 import DashboardLayout from './layouts/DashboardLayout';
 
-// pages
+// pagess
 import Homepage from './pages/Homepage';
 import Search from './pages/Search';
 import Registration from './pages/Registration';
