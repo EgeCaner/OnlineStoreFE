@@ -3,6 +3,13 @@ import { auth, handleUserProfile, getCurrentUser, GoogleProvider } from './../..
 import userTypes from './user.types';
 import { signInSuccess, signOutUserSuccess, resetPasswordSuccess, userError } from './user.actions';
 import { handleResetPasswordAPI } from './user.helpers';
+import {apiInstance} from "./../../Utils";
+import {loginUserService} from  '../User/authenticationService';
+import { Link } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
+import history from '../../redux/history';
+
+
 
 export function* getSnapshotFromUserAuth(user, additionalData = {}) {
   try {
@@ -19,19 +26,47 @@ export function* getSnapshotFromUserAuth(user, additionalData = {}) {
     // console.log(err);
   }
 }
+//
+function forwardTo(location) {
+  history.push(location);
+}
 
-export function* emailSignIn({ payload: { email, password } }) {
+export function* usernameSignIn( payload ) {
   try {
-    const { user } = yield auth.signInWithEmailAndPassword(email, password);
-    yield getSnapshotFromUserAuth(user);
+    console.log("calling user service");
+    const response = yield call(loginUserService, payload);
+    //const resdata = response.data;
+    console.log("out of user service");
 
-  } catch (err) {
-    // console.log(err);
+    console.log(response);
+   // { type: userTypes.SIGN_IN_SUCCESS, response: response.data }
+   console.log("calling user reducer");
+
+    yield put(signInSuccess(response.data));
+      
+    
+    console.log("out of user reducer");
+
+    //const token = response.data;
+    //localStorage.setItem("jwttoken", token);
+    //console.log(response.data);
+    
+    //yield call(forwardTo, '/');
+    //history.go(0);
+
+
+
+    
+
+
+  } catch (error) {
+    console.log("error on saga");
+    //yield put({ type: userTypes.userError, error })
   }
 }
 
-export function* onEmailSignInStart() {
-  yield takeLatest(userTypes.EMAIL_SIGN_IN_START, emailSignIn);
+export function* onusernameSignInStart() {
+  yield takeLatest(userTypes.USERNAME_SIGN_IN_START, usernameSignIn);
 }
 
 export function* isUserAuthenticated() {
@@ -49,9 +84,10 @@ export function* onCheckUserSession() {
   yield takeLatest(userTypes.CHECK_USER_SESSION, isUserAuthenticated);
 }
 
+
 export function* signOutUser() {
   try {
-    yield auth.signOut();
+    //localStorage.removeItem("jwttoken")
     yield put(
       signOutUserSuccess()
     )
@@ -130,7 +166,7 @@ export function* onGoogleSignInStart() {
 
 export default function* userSagas() {
   yield all([
-    call(onEmailSignInStart),
+    call(onusernameSignInStart),
     call(onCheckUserSession),
     call(onSignOutUserStart),
     call(onSignUpUserStart),
