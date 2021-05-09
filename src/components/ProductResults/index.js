@@ -1,6 +1,4 @@
-import React, {useState, useEffect} from "react"
-import {apiInstance} from "./../../Utils"
-
+import React, {useEffect} from "react"
 import {useDispatch, useSelector} from "react-redux"
 import {useHistory, useParams} from "react-router-dom"
 import {fetchProductsStart} from "./../../redux/Products/products.actions"
@@ -14,21 +12,6 @@ const mapState = ({productsData}) => ({
 })
 
 const ProductResults = ({}) => {
-  const [Products, setProducts] = useState([])
-
-  useEffect(() => {
-    function componentDidMount() {
-      return apiInstance
-        .get("/Product/getall")
-        .then((response) => {
-          setProducts(response.data.data)
-          console.log(Products)
-        })
-        .catch((err) => console.log(err))
-    }
-    componentDidMount()
-  })
-
   const dispatch = useDispatch()
   const history = useHistory()
   const {filterType} = useParams()
@@ -63,11 +46,11 @@ const ProductResults = ({}) => {
       },
       {
         name: "Laptops",
-        value: "mens",
+        value: "laptops",
       },
       {
         name: "Televisions",
-        value: "womens",
+        value: "televisions",
       },
     ],
     handleChange: handleFilter,
@@ -94,7 +77,7 @@ const ProductResults = ({}) => {
       <FormSelect {...configFilters} />
 
       <div className="productResults">
-        {Products.map((product, pos) => {
+        {products.map((product, pos) => {
           const {imageUrl, productName, price} = product
           if (!imageUrl || !productName || price === "undefined") return null
 
