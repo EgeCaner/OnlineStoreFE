@@ -76,20 +76,23 @@ export const handleDeleteProduct = (documentID) => {
 
 export const handleFetchProduct = (productID) => {
   return new Promise((resolve, reject) => {
-    /* firestore
-      .collection("products")
-      .doc(productID)
-      .get()
+    apiInstance
+      .get("Product/getall")
       .then((snapshot) => {
-        if (snapshot.exists) {
-          resolve({
-            ...snapshot.data(),
-            documentID: productID,
-          })
-        }
+        const dataInput = snapshot.data.data
+        let dataInput1 = dataInput.filter((product) => {
+          return product.productId == productID
+        })
+
+        const data = {...dataInput1}
+        resolve({
+          data,
+          /*           queryDoc: snapshot.docs[totalCount - 1],
+            isLastPage: totalCount < 1, */
+        })
       })
       .catch((err) => {
         reject(err)
-      }) */
+      })
   })
 }

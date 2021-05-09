@@ -57,7 +57,8 @@ export function* onDeleteProductStart() {
 export function* fetchProduct({payload}) {
   try {
     const product = yield handleFetchProduct(payload)
-    yield put(setProduct(product))
+    console.log(product.data[0])
+    yield put(setProduct(product.data[0]))
   } catch (err) {
     // console.log(err);
   }
