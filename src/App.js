@@ -18,6 +18,7 @@ import DashboardLayout from "./layouts/DashboardLayout"
 
 // pages
 import Homepage from "./pages/Homepage"
+// hadi amk
 import Search from "./pages/Search"
 import Registration from "./pages/Registration"
 import Login from "./pages/Login"
