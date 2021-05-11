@@ -12,7 +12,7 @@ const Directory = (props) => {
             backgroundImage: `url(https://www.techadvisor.com/cmsdata/slideshow/3214618/best_laptops_thumb800.jpg)`,
           }}
         >
-          <Link to="/search/0">Shop Laptops</Link>
+          <Link to="/search/laptops">Shop Laptops</Link>
         </div>
         <div
           className="item"
@@ -20,7 +20,7 @@ const Directory = (props) => {
             backgroundImage: `url(https://azcd.harveynorman.com.au/media/wysiwyg/buying-guides/tvs-blue-ray-home-theatre/Samsung-smart-tv.jpg)`,
           }}
         >
-          <Link to="/search/1">Shop Televisions</Link>
+          <Link to="/search/televisions">Shop Televisions</Link>
         </div>
       </div>
     </div>

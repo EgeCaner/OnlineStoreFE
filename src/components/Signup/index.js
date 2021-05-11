@@ -17,7 +17,7 @@ const Signup = props => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { currentUser, userErr } = useSelector(mapState);
-  const [displayName, setDisplayName] = useState('');
+  const [username, setDisplayName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -49,7 +49,7 @@ const Signup = props => {
   const handleFormSubmit = event => {
     event.preventDefault();
     dispatch(signUpUserStart({
-      displayName,
+      username,
       email,
       password,
       confirmPassword
@@ -80,9 +80,9 @@ const Signup = props => {
 
           <FormInput
             type="text"
-            name="displayName"
-            value={displayName}
-            placeholder="Full name"
+            name="username"
+            value={username}
+            placeholder="username"
             handleChange={e => setDisplayName(e.target.value)}
           />
 

@@ -1,29 +1,28 @@
-import React from "react"
-import {useHistory} from "react-router-dom"
-import {useSelector} from "react-redux"
-import {
-  selectCartItems,
-  selectCartTotal,
-} from "./../../redux/Cart/cart.selectors"
-import {createStructuredSelector} from "reselect"
-import "./styles.scss"
-import Button from "./../forms/Button"
-import Item from "./Item"
+import React from 'react';
+import { useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { selectCartItems, selectCartTotal } from './../../redux/Cart/cart.selectors';
+import { createStructuredSelector } from 'reselect';
+import './styles.scss';
+import Button from './../forms/Button';
+import Item from './Item';
 
 const mapState = createStructuredSelector({
   cartItems: selectCartItems,
-  total: selectCartTotal,
-})
+  total: selectCartTotal
+});
 
-const Checkout = ({}) => {
-  const history = useHistory()
-  const {cartItems, total} = useSelector(mapState)
+const Checkout = ({ }) => {
+  const history = useHistory();
+  const { cartItems, total } = useSelector(mapState);
 
-  const errMsg = "You have no items in your cart."
+  const errMsg = 'You have no items in your cart.';
 
   return (
     <div className="checkout">
-      <h1>Checkout</h1>
+      <h1>
+        Checkout
+      </h1>
 
       <div className="cart">
         {cartItems.length > 0 ? (
@@ -31,19 +30,24 @@ const Checkout = ({}) => {
             <tbody>
               <tr>
                 <td>
-                  <table
-                    className="checkoutHeader"
-                    border="0"
-                    cellPadding="10"
-                    cellSpacing="0"
-                  >
+                  <table className="checkoutHeader" border="0" cellPadding="10" cellSpacing="0">
                     <tbody>
                       <tr>
-                        <th>Product</th>
-                        <th>Description</th>
-                        <th>Amount</th>
-                        <th>Price</th>
-                        <th>Remove</th>
+                        <th>
+                          Product
+                        </th>
+                        <th>
+                          Description
+                        </th>
+                        <th>
+                          Quantity
+                        </th>
+                        <th>
+                          Price
+                        </th>
+                        <th>
+                          Remove
+                        </th>
                       </tr>
                     </tbody>
                   </table>
@@ -60,7 +64,7 @@ const Checkout = ({}) => {
                               <Item {...item} />
                             </td>
                           </tr>
-                        )
+                        );
                       })}
                     </tbody>
                   </table>
@@ -76,7 +80,9 @@ const Checkout = ({}) => {
                             <tbody>
                               <tr>
                                 <td>
-                                  <h3>Total: £{total}</h3>
+                                <h3>
+                                  Total: £{total}
+                                </h3>
                                 </td>
                               </tr>
                             </tbody>
@@ -94,9 +100,7 @@ const Checkout = ({}) => {
                                   </Button>
                                 </td>
                                 <td>
-                                  <Button
-                                    onClick={() => history.push("/payment")}
-                                  >
+                                  <Button onClick={() => history.push('/payment')}>
                                     Checkout
                                   </Button>
                                 </td>
@@ -112,11 +116,13 @@ const Checkout = ({}) => {
             </tbody>
           </table>
         ) : (
-          <p>{errMsg}</p>
-        )}
+            <p>
+              {errMsg}
+            </p>
+          )}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Checkout
+export default Checkout;

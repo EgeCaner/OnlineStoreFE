@@ -65,19 +65,11 @@ const ProductResults = ({}) => {
       },
       {
         name: "Laptops",
-        value: "0",
+        value: "mens",
       },
       {
         name: "Televisions",
-        value: "1",
-      },
-      {
-        name: "Cameras",
-        value: "2",
-      },
-      {
-        name: "Phones",
-        value: "3",
+        value: "womens",
       },
     ],
     handleChange: handleFilter,
@@ -106,6 +98,7 @@ const ProductResults = ({}) => {
       <FormSelect {...configFilters} />
 
       <div className="productResults">
+<<<<<<< HEAD
         {Products.filter((val)=>{
           if(searchTerm == ""){
             return val
@@ -116,6 +109,9 @@ const ProductResults = ({}) => {
           }
 
         }).map((product, pos) => {
+=======
+        {Products.map((product, pos) => {
+>>>>>>> 09fe8cc9f2dcb729bfda146f115cc220c1bbf6b1
           const {imageUrl, productName, price} = product
           if (!imageUrl || !productName || price === "undefined") return null
 

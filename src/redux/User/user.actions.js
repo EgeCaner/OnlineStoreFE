@@ -1,13 +1,13 @@
 import userTypes from './user.types';
 
-export const emailSignInStart = userCredentials => ({
-  type: userTypes.EMAIL_SIGN_IN_START,
+export const usernameSignInStart = userCredentials => ({
+  type: userTypes.USERNAME_SIGN_IN_START,
   payload: userCredentials
 });
 
-export const signInSuccess = user => ({
+export const signInSuccess = userCredentials => ({
   type: userTypes.SIGN_IN_SUCCESS,
-  payload: user
+  payload: userCredentials
 });
 
 export const checkUserSession = () => ({
