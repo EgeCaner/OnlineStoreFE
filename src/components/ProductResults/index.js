@@ -1,6 +1,4 @@
 import React, {useState, useEffect} from "react"
-import {apiInstance} from "./../../Utils"
-
 import {useDispatch, useSelector} from "react-redux"
 import {useHistory, useParams} from "react-router-dom"
 import {fetchProductsStart} from "./../../redux/Products/products.actions"
@@ -9,28 +7,11 @@ import FormSelect from "./../forms/FormSelect"
 import LoadMore from "./../LoadMore"
 import "./styles.scss"
 
-
-
 const mapState = ({productsData}) => ({
   products: productsData.products,
 })
 
 const ProductResults = ({}) => {
-  const [Products, setProducts] = useState([])
-
-  useEffect(() => {
-    function componentDidMount() {
-      return apiInstance
-        .get("/Product/getall")
-        .then((response) => {
-          setProducts(response.data.data)
-          console.log(Products)
-        })
-        .catch((err) => console.log(err))
-    }
-    componentDidMount()
-  })
-
   const dispatch = useDispatch()
   const history = useHistory()
   const {filterType} = useParams()
@@ -65,11 +46,19 @@ const ProductResults = ({}) => {
       },
       {
         name: "Laptops",
-        value: "mens",
+        value: "0",
       },
       {
         name: "Televisions",
-        value: "womens",
+        value: "1",
+      },
+      {
+        name: "Cameras",
+        value: "2",
+      },
+      {
+        name: "Phones",
+        value: "3",
       },
     ],
     handleChange: handleFilter,
@@ -88,35 +77,44 @@ const ProductResults = ({}) => {
   const configLoadMore = {
     onLoadMoreEvt: handleLoadMore,
   }
-  const [searchTerm, setSearchTerm] = useState('')
+  const [searchTerm, setSearchTerm] = useState("")
   return (
     <div className="products">
       <h1>Browse Products</h1>
-      <input type = "text" placeholder ="Search ..."  
-      onChange={event => {
-        setSearchTerm(event.target.value)} } />
+      <input
+        type="text"
+        placeholder="Search ..."
+        onChange={(event) => {
+          setSearchTerm(event.target.value)
+        }}
+      />
       <FormSelect {...configFilters} />
 
       <div className="productResults">
-        {Products.filter((val)=>{
-          if(searchTerm == ""){
-            return val
-          }else if(val.productName.toLowerCase().includes(searchTerm.toLowerCase())){
+        {products
+          .filter((val) => {
+            if (searchTerm == "") {
               return val
-          }else if(val.description.toLowerCase().includes(searchTerm.toLowerCase())){
-            return val
-          }
+            } else if (
+              val.productName.toLowerCase().includes(searchTerm.toLowerCase())
+            ) {
+              return val
+            } else if (
+              val.description.toLowerCase().includes(searchTerm.toLowerCase())
+            ) {
+              return val
+            }
+          })
+          .map((product, pos) => {
+            const {imageUrl, productName, price} = product
+            if (!imageUrl || !productName || price === "undefined") return null
 
-        }).map((product, pos) => {
-          const {imageUrl, productName, price} = product
-          if (!imageUrl || !productName || price === "undefined") return null
+            const configProduct = {
+              ...product,
+            }
 
-          const configProduct = {
-            ...product,
-          }
-
-          return <Product key={pos} {...configProduct} />
-        })}
+            return <Product key={pos} {...configProduct} />
+          })}
       </div>
 
       {!isLastPage && <LoadMore {...configLoadMore} />}

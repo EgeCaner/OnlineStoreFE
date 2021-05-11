@@ -8,7 +8,7 @@ import {
 
 const Item = (product) => {
   const dispatch = useDispatch()
-  const {productName, imageUrl, price, quantity, productId} = product
+  const {productName, imageUrl, price, amount, productId} = product
 
   const handleRemoveCartItem = (productId) => {
     dispatch(
@@ -38,7 +38,7 @@ const Item = (product) => {
             <span className="cartBtn" onClick={() => handleReduceItem(product)}>
               {`< `}
             </span>
-            <span>{quantity}</span>
+            <span>{amount}</span>
             <span className="cartBtn" onClick={() => handleAddProduct(product)}>
               {` >`}
             </span>
