@@ -1,4 +1,6 @@
-import React, {useEffect} from "react"
+import React, {useState, useEffect} from "react"
+import {apiInstance} from "./../../Utils"
+
 import {useDispatch, useSelector} from "react-redux"
 import {useHistory, useParams} from "react-router-dom"
 import {fetchProductsStart} from "./../../redux/Products/products.actions"
@@ -12,6 +14,21 @@ const mapState = ({productsData}) => ({
 })
 
 const ProductResults = ({}) => {
+  const [Products, setProducts] = useState([])
+
+  useEffect(() => {
+    function componentDidMount() {
+      return apiInstance
+        .get("/Product/getall")
+        .then((response) => {
+          setProducts(response.data.data)
+          console.log(Products)
+        })
+        .catch((err) => console.log(err))
+    }
+    componentDidMount()
+  })
+
   const dispatch = useDispatch()
   const history = useHistory()
   const {filterType} = useParams()
@@ -27,15 +44,15 @@ const ProductResults = ({}) => {
     const nextFilter = e.target.value
     history.push(`/search/${nextFilter}`)
   }
-
-  /*if (!Array.isArray(data)) return null
+  /* 
+  if (!Array.isArray(data)) return null
   if (data.length < 1) {
     return (
       <div className="products">
         <p>No search results.</p>
       </div>
     )
-  }*/
+  } */
 
   const configFilters = {
     defaultValue: filterType,
@@ -46,19 +63,11 @@ const ProductResults = ({}) => {
       },
       {
         name: "Laptops",
-        value: "0",
+        value: "mens",
       },
       {
         name: "Televisions",
-        value: "1",
-      },
-      {
-        name: "Cameras",
-        value: "2",
-      },
-      {
-        name: "Phones",
-        value: "3",
+        value: "womens",
       },
     ],
     handleChange: handleFilter,
@@ -85,7 +94,7 @@ const ProductResults = ({}) => {
       <FormSelect {...configFilters} />
 
       <div className="productResults">
-        {products.map((product, pos) => {
+        {Products.map((product, pos) => {
           const {imageUrl, productName, price} = product
           if (!imageUrl || !productName || price === "undefined") return null
 

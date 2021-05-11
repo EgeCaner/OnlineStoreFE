@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
-import { emailSignInStart, googleSignInStart } from './../../redux/User/user.actions';
+import { usernameSignInStart, googleSignInStart } from './../../redux/User/user.actions';
 
 import './styles.scss';
 
@@ -11,13 +11,14 @@ import Button from './../forms/Button';
 
 const mapState = ({ user }) => ({
   currentUser: user.currentUser
+  
 });
 
 const SignIn = props => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { currentUser } = useSelector(mapState);
-  const [email, setEmail] = useState('');
+  const [username, setusername] = useState('');
   const [password, setPassword] = useState('')
 
   useEffect(() => {
@@ -29,13 +30,14 @@ const SignIn = props => {
   }, [currentUser]);
 
   const resetForm = () => {
-    setEmail('');
+    setusername('');
     setPassword('');
   };
 
   const handleSubmit = e => {
+
     e.preventDefault();
-    dispatch(emailSignInStart({ email, password }));
+    dispatch(usernameSignInStart({ username, password }));
   }
 
   const handleGoogleSignIn = () => {
@@ -52,11 +54,11 @@ const SignIn = props => {
         <form onSubmit={handleSubmit}>
 
           <FormInput
-            type="email"
-            name="email"
-            value={email}
-            placeholder="Email"
-            handleChange={e => setEmail(e.target.value)}
+            type="username"
+            name="username"
+            value={username}
+            placeholder="username"
+            handleChange={e => setusername(e.target.value)}
           />
 
           <FormInput
@@ -71,13 +73,7 @@ const SignIn = props => {
             LogIn
           </Button>
 
-          <div className="socialSignin">
-            <div className="row">
-              <Button onClick={handleGoogleSignIn}>
-                Sign in with Google
-              </Button>
-            </div>
-          </div>
+
 
           <div className="links">
             <Link to="/registration">

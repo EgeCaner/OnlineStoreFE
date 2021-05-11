@@ -66,7 +66,7 @@ const ProductCard = ({}) => {
             <span
               className="desc"
               dangerouslySetInnerHTML={{__html: description}}
-            ></span>
+            />
           </li>
         </ul>
       </div>

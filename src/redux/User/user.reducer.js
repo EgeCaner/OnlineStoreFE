@@ -7,13 +7,17 @@ const INITIAL_STATE = {
 };
 
 const userReducer = (state = INITIAL_STATE, action) => {
+  console.log("in reducer", action);
   switch (action.type) {
     case userTypes.SIGN_IN_SUCCESS:
       return {
+        
         ...state,
         currentUser: action.payload,
         userErr: []
       }
+      
+      
     case userTypes.RESET_PASSWORD_SUCCESS:
       return {
         ...state,
