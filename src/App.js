@@ -17,21 +17,6 @@ import AdminLayout from './layouts/AdminLayout';
 import DashboardLayout from './layouts/DashboardLayout';
 
 // pages
-<<<<<<< HEAD
-import Homepage from "./pages/Homepage"
-// hadi amk
-import Search from "./pages/Search"
-import Registration from "./pages/Registration"
-import Login from "./pages/Login"
-import Recovery from "./pages/Recovery"
-import Dashboard from "./pages/Dashboard"
-import Admin from "./pages/Admin"
-import ProductDetails from "./pages/ProductDetails"
-import Cart from "./pages/Cart"
-import Payment from "./pages/Payment"
-import Order from "./pages/Order"
-import "./default.scss"
-=======
 import Homepage from './pages/Homepage';
 import Search from './pages/Search';
 import Registration from './pages/Registration';
@@ -44,7 +29,6 @@ import Cart from './pages/Cart';
 import Payment from './pages/Payment';
 import Order from './pages/Order';
 import './default.scss';
->>>>>>> 09fe8cc9f2dcb729bfda146f115cc220c1bbf6b1
 
 const App = props => {
   const dispatch = useDispatch();
