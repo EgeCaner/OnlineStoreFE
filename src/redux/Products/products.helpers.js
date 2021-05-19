@@ -3,16 +3,15 @@ import {apiInstance} from "./../../Utils"
 
 export const handleAddProduct = (product) => {
   return new Promise((resolve, reject) => {
-    /* firestore
-      .collection("products")
-      .doc()
-      .set(product)
-      .then(() => {
-        resolve()
+    apiInstance
+      .put("Product/Add", {...product})
+      .then((res) => {
+        console.log(res)
+        resolve(product)
       })
       .catch((err) => {
         reject(err)
-      }) */
+      })
   })
 }
 
@@ -22,16 +21,6 @@ export const handleFetchProducts = ({
   persistProducts = [],
 }) => {
   return new Promise((resolve, reject) => {
-    /* const pageSize = 6
-
-    let ref = firestore
-      .collection("products")
-      .orderBy("createdDate")
-      .limit(pageSize)
-
-    if (filterType) ref = ref.where("categoryId", "==", filterType)
-    if (startAfterDoc) ref = ref.startAfter(startAfterDoc) */
-
     apiInstance
       .get("Product/getall")
       .then((snapshot) => {
@@ -58,19 +47,17 @@ export const handleFetchProducts = ({
   })
 }
 
-export const handleDeleteProduct = (documentID) => {
+export const handleDeleteProduct = (productId) => {
   return new Promise((resolve, reject) => {
-    /*  firestore
-      .collection("products")
-      .doc(documentID)
-      .delete()
-      .then(() => {
-        console.log(documentID, 2)
-        resolve()
+    apiInstance
+      .delete(`Product/${productId}`)
+      .then((res) => {
+        console.log(res)
+        resolve(res)
       })
       .catch((err) => {
         reject(err)
-      }) */
+      })
   })
 }
 

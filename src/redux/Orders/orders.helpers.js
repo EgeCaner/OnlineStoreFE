@@ -1,63 +1,48 @@
-import { firestore } from './../../firebase/utils';
+import {firestore} from "./../../firebase/utils"
+import {apiInstance} from "./../../Utils"
 
-export const handleSaveOrder = order => {
+export const handleSaveOrder = (order) => {
   return new Promise((resolve, reject) => {
-    firestore
-      .collection('orders')
-      .doc()
-      .set(order)
-      .then(() => {
-        resolve();
+    apiInstance
+      .get("Order/GetById")
+      .then((res) => {
+        resolve(res)
       })
-      .catch(err => {
-        reject(err);
-      });
-  });
-};
+      .catch((err) => {
+        reject(err)
+      })
+  })
+}
 
-export const handleGetUserOrderHistory = uid => {
+export const handleGetUserOrderHistory = () => {
   return new Promise((resolve, reject) => {
-    let ref = firestore.collection('orders').orderBy('orderCreatedDate');
-    ref = ref.where('orderUserID', '==', uid);
-
-    ref
-      .get()
-      .then(snap => {
-        const data = [
-          ...snap.docs.map(doc => {
-            return {
-              ...doc.data(),
-              documentID: doc.id
-            }
-          })
-        ];
-
-        resolve({ data });
+    apiInstance
+      .get("Order/GetById")
+      .then((snap) => {
+        console.log(snap)
+        const data = [...snap.data.data]
+        resolve({data})
       })
-      .catch(err => {
-        reject(err);
-      });
+      .catch((err) => {
+        reject(err)
+      })
+  })
+}
 
-
-  });
-};
-
-export const handleGetOrder = orderID => {
+export const handleGetOrder = (orderId) => {
   return new Promise((resolve, reject) => {
-    firestore
-      .collection('orders')
-      .doc(orderID)
-      .get()
-      .then(snap => {
-        if (snap.exists) {
-          resolve({
-            ...snap.data(),
-            documentID: orderID
-          })
-        }
+    apiInstance
+      .get(`Order/Getall`)
+      .then((snap) => {
+        const OrderDetailsdata = snap.data.data.filter((order) => {
+          return order.id == orderId
+        })
+        resolve({
+          ...OrderDetailsdata,
+        })
       })
-      .catch(err => {
-        reject(err);
+      .catch((err) => {
+        reject(err)
       })
   })
 }
