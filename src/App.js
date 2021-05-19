@@ -128,7 +128,7 @@ const App = (props) => {
           )}
         />
         <Route
-          path="/order/:orderID"
+          path="/order/:id"
           render={() => (
             <WithAuth>
               <DashboardLayout>

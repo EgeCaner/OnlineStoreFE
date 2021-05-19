@@ -16,6 +16,7 @@ const Header = (props) => {
   const location = useLocation()
   const [activeMenu, setActiveMenu] = useState(false)
   const dispatch = useDispatch()
+
   const {currentUser, totalNumCartItems} = useSelector(mapState)
 
   const signOut = () => {

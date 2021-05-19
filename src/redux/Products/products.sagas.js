@@ -12,14 +12,14 @@ import productsTypes from "./products.types"
 export function* addProduct({payload}) {
   try {
     const timestamp = new Date()
+
     yield handleAddProduct({
       ...payload,
-      productAdminUserUID: auth.currentUser.uid,
       createdDate: timestamp,
     })
     yield put(fetchProductsStart())
   } catch (err) {
-    // console.log(err);
+    console.log(err)
   }
 }
 
@@ -33,7 +33,7 @@ export function* fetchProducts({payload}) {
 
     yield put(setProducts(products.data))
   } catch (err) {
-    // console.log(err);
+    console.log(err)
   }
 }
 
@@ -46,7 +46,7 @@ export function* deleteProduct({payload}) {
     yield handleDeleteProduct(payload)
     yield put(fetchProductsStart())
   } catch (err) {
-    // console.log(err);
+    console.log(err)
   }
 }
 
@@ -60,7 +60,7 @@ export function* fetchProduct({payload}) {
     console.log(product.data[0])
     yield put(setProduct(product.data[0]))
   } catch (err) {
-    // console.log(err);
+    console.log(err)
   }
 }
 
