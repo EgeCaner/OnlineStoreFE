@@ -27,8 +27,13 @@ export const deleteCartItem = async (productId) => {
   console.log("barba")
   let response = new Promise((resolve, reject) => {
     apiInstance
-      .delete("/ShoppingCart/DeleteCartItem", json, {
-        headers: {"Content-Type": "application/json"},
+      .delete("/ShoppingCart/DeleteCartItem", {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        data: {
+          ProductId: productId,
+        },
       })
       .then((res) => {
         console.log("came this long")
@@ -65,8 +70,8 @@ export const updateCartItem = async (productId, amount) => {
   let response = new Promise((resolve, reject) => {
     apiInstance
       .put("/ShoppingCart/UpdateCartItem", {
-        ProductId: productId,
         Quantity: amount,
+        ProductId: productId,
       })
       .then((res) => {
         console.log(res)

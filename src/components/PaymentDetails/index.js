@@ -81,13 +81,13 @@ const PaymentDetails = () => {
       !shippingAddress.state ||
       !shippingAddress.postal_code ||
       !shippingAddress.country ||
-      !billingAddress.line1 ||
+      /* !billingAddress.line1 ||
       !billingAddress.city ||
       !billingAddress.state ||
       !billingAddress.postal_code ||
-      !billingAddress.country ||
-      !recipientName ||
-      !nameOnCard
+      !billingAddress.country || */
+      !recipientName /*||
+       !nameOnCard */
     ) {
       return
     }
@@ -204,7 +204,7 @@ const PaymentDetails = () => {
             />
           </div>
         </div>
-
+        {/* 
         <div className="group">
           <h2>Billing Address</h2>
 
@@ -277,13 +277,12 @@ const PaymentDetails = () => {
             />
           </div>
         </div>
-
+         */}
         <div className="group">
           <h2>Card Details</h2>
 
           <CardElement options={configCardElement} />
         </div>
-
         <Button type="submit">Pay Now</Button>
       </form>
     </div>

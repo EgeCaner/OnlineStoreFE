@@ -94,7 +94,7 @@ export function* handleReduceCartItem({payload}) {
   }
 
   const response = updateCartItem(
-    payload,
+    nextCartItem,
     cartItemExists.quantity - amountDecrement
   )
   console.log(response)
