@@ -3,26 +3,33 @@ import {useParams, useHistory} from "react-router-dom"
 import {useDispatch, useSelector} from "react-redux"
 import {
   fetchProductStart,
+  fetchCommentsStart,
+  addCommentStart,
   setProduct,
 } from "./../../redux/Products/products.actions"
 import {addProduct} from "./../../redux/Cart/cart.actions"
 import Button from "./../forms/Button"
+import StarRatingComponent from "react-star-rating-component"
 import "./styles.scss"
 
 const mapState = (state) => ({
   product: state.productsData.product,
+  comments: state.productsData.comments,
 })
+
+let com = ""
 
 const ProductCard = ({}) => {
   const dispatch = useDispatch()
   const history = useHistory()
   const {productId} = useParams()
-  const {product} = useSelector(mapState)
+  const {product, comments} = useSelector(mapState)
 
-  const {imageUrl, productName, price, description} = product
+  const {imageUrl, productName, price, description, rating} = product
 
   useEffect(() => {
     dispatch(fetchProductStart(productId))
+    dispatch(fetchCommentsStart(productId))
 
     return () => {
       dispatch(setProduct({}))
@@ -37,6 +44,11 @@ const ProductCard = ({}) => {
 
   const configAddToCartBtn = {
     type: "button",
+  }
+
+  const handleAddComments = (comments) => {
+    console.log(comments)
+    com = comments.target.value
   }
 
   return (
@@ -69,6 +81,60 @@ const ProductCard = ({}) => {
             />
           </li>
         </ul>
+      </div>
+      <div>
+        <div className="comments">
+          <StarRatingComponent
+            name="rate2"
+            editing={false}
+            starCount={5}
+            value={rating}
+            size={200}
+            style={{
+              margin: 0,
+              marginRight: 6,
+              cursor: "pointer",
+            }}
+          />
+        </div>
+      </div>
+
+      <form>
+        <textarea
+          sstyle=" min-width:5000px; max-width:100%;min-height:50px;max-height:100%;width:100%;"
+          rows="4"
+          cols="100"
+          placeholder="Make your comment"
+          type="text"
+          height="150px"
+          onChange={handleAddComments}
+        />
+      </form>
+      <Button
+        className="button"
+        onClick={() =>
+          dispatch(addCommentStart({description: com, ProductId: productId}))
+        }
+      >
+        Submit
+      </Button>
+
+      <h3 class="commentsheader">Comments:</h3>
+      <div className="comments">
+        {Array.isArray(comments) &&
+          comments.length > 0 &&
+          comments.map((comments, pos) => {
+            const {description, commentorName, like} = comments
+            return (
+              <tr key={pos}>
+                <ul class="separator">
+                  <p>{description} </p>
+                  <h4>{commentorName}</h4>
+                  <h4>Likes: {like}</h4>
+                </ul>
+              </tr>
+            )
+          })}
       </div>
     </div>
   )

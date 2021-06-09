@@ -23,3 +23,7 @@ export const getCartA = (cartItems) => ({
   type: cartTypes.GET_CART,
   payload: cartItems,
 })
+
+export const getCartB = () => ({
+  type: cartTypes.GET_CARTB,
+})

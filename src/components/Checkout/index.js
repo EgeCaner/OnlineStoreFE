@@ -9,7 +9,7 @@ import {createStructuredSelector} from "reselect"
 import "./styles.scss"
 import Button from "./../forms/Button"
 import Item from "./Item"
-import {getCartA} from "../../redux/Cart/cart.actions"
+import {getCartA, getCartB} from "../../redux/Cart/cart.actions"
 
 const mapState = createStructuredSelector({
   cartItems: selectCartItems,
@@ -21,8 +21,9 @@ const Checkout = ({}) => {
   const history = useHistory()
   const {cartItems, total} = useSelector(mapState)
   useEffect(() => {
-    dispatch(getCartA)
-  }, [cartItems])
+    console.log("this is executed")
+    dispatch(getCartB())
+  }, [])
   const errMsg = "You have no items in your cart."
 
   return (

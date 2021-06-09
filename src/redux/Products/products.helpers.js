@@ -28,7 +28,7 @@ export const handleFetchProducts = ({
         const dataInput = snapshot.data.data
         let dataInput1 = dataInput.filter((product) => {
           if (filterType in ["1", "2", "3", "4", "5", "6", "7", "8"]) {
-            return product.categoryId == filterType 
+            return product.categoryId == filterType
           } else {
             //console.log('helper func: ',product)
             return product
@@ -66,7 +66,15 @@ export const handleUpdateProduct = (payload) => {
   console.log(payload)
   return new Promise((resolve, reject) => {
     apiInstance
-      .put(`Product/Update`,{ProductId: payload.productId, Quantity: payload.quantity,ProductName: payload.productName, Price: payload.price, Description: payload.description, CategoryId: payload.categoryId, DiscountRate: payload.discountRate  })
+      .put(`Product/Update`, {
+        ProductId: payload.productId,
+        Quantity: payload.quantity,
+        ProductName: payload.productName,
+        Price: payload.price,
+        Description: payload.description,
+        CategoryId: payload.categoryId,
+        DiscountRate: payload.discountRate,
+      })
       .then((res) => {
         console.log(res)
         resolve(res)
@@ -76,7 +84,6 @@ export const handleUpdateProduct = (payload) => {
       })
   })
 }
-
 
 export const handleFetchProduct = (productID) => {
   return new Promise((resolve, reject) => {
@@ -94,6 +101,38 @@ export const handleFetchProduct = (productID) => {
           /*           queryDoc: snapshot.docs[totalCount - 1],
             isLastPage: totalCount < 1, */
         })
+      })
+      .catch((err) => {
+        reject(err)
+      })
+  })
+}
+
+export const fetchCommentsHelper = (productID) => {
+  return new Promise((resolve, reject) => {
+    apiInstance
+      .get(`Product/GetAllComments/${productID}`, {})
+      .then((snapshot) => {
+        const dataInput = snapshot.data.data
+        console.log(dataInput).resolve(dataInput)
+      })
+      .catch((err) => {
+        reject(err)
+      })
+  })
+}
+
+export const addCommentsHelper = (comment) => {
+  console.log(comment)
+  return new Promise((resolve, reject) => {
+    apiInstance
+      .put(`Product/AddComment`, comment)
+      .then((res) => {
+        /*const dataInput = snapshot.data.data
+        console.log(dataInput)*/
+        console.log(res)
+
+        resolve(res)
       })
       .catch((err) => {
         reject(err)

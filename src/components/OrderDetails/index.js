@@ -37,6 +37,10 @@ const columns = [
     id: "quantity",
     label: "Amount",
   },
+  /*   {
+    id: "categoryId",
+    label: "Refund",
+  }, */
 ]
 
 const styles = {
@@ -50,7 +54,8 @@ const formatText = (columnName, columnValue) => {
       if (columnValue == "0") return `Processing...`
       else if (columnValue == "1") return "Shipped..."
       else if (columnValue == "2") return "Delivered..."
-      else if (columnValue == "3") return "Refunded..."
+      else if (columnValue == "3") return "Refund Request Sent..."
+    /* else if (columnValue == "4") return "Refunded..."*/
     case "price":
       return `£${columnValue}`
     case "productId":
