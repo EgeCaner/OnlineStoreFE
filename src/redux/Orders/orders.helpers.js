@@ -46,3 +46,38 @@ export const handleGetOrder = (orderId) => {
       })
   })
 }
+
+export const handleOrderStatus = (payload) => {
+  return new Promise((resolve, reject) => {
+    apiInstance
+      .put(`Order/ChangeStatus`,{Id: payload.id, Status: payload.e, Quantity: payload.quant })
+      .then((res) => {
+        console.log(res)
+        resolve(res)
+      })
+      .catch((err) => {
+        reject(err)
+      })
+  })
+}
+
+export const handleGetAllOrders = (  ) => {
+  return new Promise((resolve, reject) => {
+    apiInstance
+      .get(`Order/Getall`)
+      .then((snap) => {
+        console.log("heyy",snap)
+        let OrderDetailsdata = snap.data.data.filter((order) => {
+          return order
+        })
+        const data = [...OrderDetailsdata]
+
+        resolve({
+         data,
+        })
+      })
+      .catch((err) => {
+        reject(err)
+      })
+  })
+}

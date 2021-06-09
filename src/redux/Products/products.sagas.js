@@ -6,6 +6,7 @@ import {
   handleFetchProducts,
   handleFetchProduct,
   handleDeleteProduct,
+  handleUpdateProduct,
 } from "./products.helpers"
 import productsTypes from "./products.types"
 
@@ -27,11 +28,18 @@ export function* onAddProductStart() {
   yield takeLatest(productsTypes.ADD_NEW_PRODUCT_START, addProduct)
 }
 
+
 export function* fetchProducts({payload}) {
   try {
-    const products = yield handleFetchProducts(payload)
+    console.log('data coming from saga2: ',payload)
 
+    const products = yield handleFetchProducts(payload)
+    console.log('data coming from saga1: ',products)
+    //products = products.data
+    //console.log('data coming from saga2: ',products.data)
     yield put(setProducts(products.data))
+    //console.log('data coming2')
+    
   } catch (err) {
     console.log(err)
   }
@@ -68,11 +76,30 @@ export function* onFetchProductStart() {
   yield takeLatest(productsTypes.FETCH_PRODUCT_START, fetchProduct)
 }
 
+
+export function* updateProduct({payload}) {
+  try {
+    console.log(payload)
+    const product = yield handleUpdateProduct(payload)
+    console.log(product)
+    const products = yield put(fetchProductsStart())
+    //yield put(setProducts(products))
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+
+export function* onUpdateProductStart() {
+  yield takeLatest(productsTypes.UPDATE_PRODUCT_START, updateProduct)
+}
+
 export default function* productsSagas() {
   yield all([
     call(onAddProductStart),
     call(onFetchProductsStart),
     call(onDeleteProductStart),
     call(onFetchProductStart),
+    call(onUpdateProductStart),
   ])
 }

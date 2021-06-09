@@ -2,7 +2,7 @@ import React, {useEffect} from "react"
 import {useParams} from "react-router-dom"
 import {getOrderDetailsStart} from "./../../redux/Orders/orders.actions"
 import {useDispatch, useSelector} from "react-redux"
-import OrderDetails from "./../../components/OrderDetails"
+import OrderDetails from "./../../components/OrderDetails/indexadmin"
 
 const mapState = ({ordersData}) => ({
   orderDetails: ordersData.orderDetails,

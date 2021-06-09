@@ -29,3 +29,7 @@ export const setProduct = product => ({
   type: productsTypes.SET_PRODUCT,
   payload: product
 });
+export const updateProductStart = updateData => ({
+  type: productsTypes.UPDATE_PRODUCT_START,
+  payload: updateData
+});

@@ -24,12 +24,13 @@ export const handleFetchProducts = ({
     apiInstance
       .get("Product/getall")
       .then((snapshot) => {
-        console.log(snapshot)
+        //console.log(snapshot)
         const dataInput = snapshot.data.data
         let dataInput1 = dataInput.filter((product) => {
           if (filterType in ["1", "2", "3", "4", "5", "6", "7", "8"]) {
-            return product.categoryId == filterType
+            return product.categoryId == filterType 
           } else {
+            //console.log('helper func: ',product)
             return product
           }
         })
@@ -60,6 +61,22 @@ export const handleDeleteProduct = (productId) => {
       })
   })
 }
+
+export const handleUpdateProduct = (payload) => {
+  console.log(payload)
+  return new Promise((resolve, reject) => {
+    apiInstance
+      .put(`Product/Update`,{ProductId: payload.productId, Quantity: payload.quantity,ProductName: payload.productName, Price: payload.price, Description: payload.description, CategoryId: payload.categoryId, DiscountRate: payload.discountRate  })
+      .then((res) => {
+        console.log(res)
+        resolve(res)
+      })
+      .catch((err) => {
+        reject(err)
+      })
+  })
+}
+
 
 export const handleFetchProduct = (productID) => {
   return new Promise((resolve, reject) => {

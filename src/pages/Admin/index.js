@@ -1,9 +1,12 @@
 import React, {useState, useEffect} from "react"
 import {useDispatch, useSelector} from "react-redux"
+import {Link} from "react-router-dom"
 import {
   addProductStart,
   fetchProductsStart,
   deleteProductStart,
+  setProduct,
+  updateProductStart,
 } from "./../../redux/Products/products.actions"
 import Modal from "./../../components/Modal"
 import FormInput from "./../../components/forms/FormInput"
@@ -17,11 +20,13 @@ const mapState = ({productsData}) => ({
   products: productsData.products,
 })
 
+let quant = 0;
 const Admin = (props) => {
   const {products} = useSelector(mapState)
   const dispatch = useDispatch()
   const [hideModal, setHideModal] = useState(true)
   const [categoryId, setCategoryId] = useState("0")
+  const [quantity, setQuantity] = useState("0")
   const [productName, setProductName] = useState("")
   const [imageUrl, setImageUrl] = useState("")
   const [price, setPrice] = useState("0")
@@ -47,7 +52,28 @@ const Admin = (props) => {
     setImageUrl("")
     setPrice("0")
     setDescription("")
+    setQuantity("0")
   }
+  const handleChangeQuantity = (e) => {
+    e.preventDefault()
+    quant = e.target.value;
+    console.log(quant);
+
+    dispatch(
+      setProduct({
+        categoryId,
+        productName,
+        imageUrl,
+        price,
+        description,
+        quantity,
+      })
+    )
+    setQuantity(e.target.value)
+    console.log(quantity)
+    resetForm()
+  }
+
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -59,6 +85,7 @@ const Admin = (props) => {
         imageUrl,
         price,
         description,
+        quantity,
       })
     )
     resetForm()
@@ -68,7 +95,8 @@ const Admin = (props) => {
     dispatch(
       fetchProductsStart({
         startAfterDoc: queryDoc,
-        persistProducts: data,
+        persistProducts: data
+        
       })
     )
   }
@@ -149,13 +177,15 @@ const Admin = (props) => {
           </form>
         </div>
       </Modal>
-
+      <Link id ='orderbutton' to="/orders">Orders</Link>      
+ 
       <div className="manageProducts">
         <table border="0" cellPadding="0" cellSpacing="0">
           <tbody>
             <tr>
               <th>
                 <h1>Manage Products</h1>
+                
               </th>
             </tr>
             <tr>
@@ -167,12 +197,14 @@ const Admin = (props) => {
                   cellSpacing="0"
                 >
                   <tbody>
-                    {Array.isArray(data) &&
-                      data.length > 0 &&
-                      data.map((product, index) => {
-                        const {productName, imageUrl, price, productId} =
-                          product
-
+                  
+                    {
+                      
+                    Array.isArray(products) &&
+                    products.length > 0 &&
+                    products.map((product, index) => {
+                        const {productName, imageUrl, price, productId, quantity, isdelete} = product
+                        console.log("quantity:",{quantity},"name:", {productName})
                         return (
                           <tr key={index}>
                             <td>
@@ -189,6 +221,22 @@ const Admin = (props) => {
                                 Delete
                               </Button>
                             </td>
+                            <td>
+                            <label>Current Stock: {quantity}</label>
+                            <br>
+                            </br>
+                            
+                            
+                            <input name='Quantity' onChange={handleChangeQuantity}/>
+                            <Button
+                                onClick={() =>
+                                  dispatch(updateProductStart({...product,quantity: quant}))
+                                }
+                              >
+                              Update
+                              </Button>
+                            </td>
+
                           </tr>
                         )
                       })}
@@ -205,6 +253,8 @@ const Admin = (props) => {
                   <tbody>
                     <tr>
                       <td>{!isLastPage && <LoadMore {...configLoadMore} />}</td>
+                  
+                      
                     </tr>
                   </tbody>
                 </table>

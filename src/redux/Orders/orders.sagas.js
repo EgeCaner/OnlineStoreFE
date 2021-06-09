@@ -4,9 +4,11 @@ import {
   handleSaveOrder,
   handleGetUserOrderHistory,
   handleGetOrder,
+  handleGetAllOrders,
+  handleOrderStatus
 } from "./orders.helpers"
 import {clearCart} from "./../Cart/cart.actions"
-import {setUserOrderHistory, setOrderDetails} from "./orders.actions"
+import {setUserOrderHistory, setOrderDetails,setAllOrderHistory} from "./orders.actions"
 import {useSelector} from "react-redux"
 
 export function* getUserOrderHistory() {
@@ -23,6 +25,24 @@ export function* onGetUserOrderHistoryStart() {
   yield takeLatest(
     ordersTypes.GET_USER_ORDER_HISTORY_START,
     getUserOrderHistory
+  )
+}
+
+export function* getAllOrderHistory({payload}) {
+  try {
+    //console.log('saga get all1:',payload)
+    const history = yield handleGetAllOrders(payload)
+    //console.log('saga get all:',history)
+    yield put(setAllOrderHistory(history))
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+export function* onGetAllOrderHistoryStart() {
+  yield takeLatest(
+    ordersTypes.GET_ALL_ORDER_HISTORY_START,
+    getAllOrderHistory
   )
 }
 
@@ -58,10 +78,26 @@ export function* onGetOrderDetailsStart() {
   yield takeLatest(ordersTypes.GET_ORDER_DETAILS_START, getOrderDetails)
 }
 
+export function* SetOrderStatus({payload}) {
+  try {
+    console.log("sass",payload)
+
+    yield put(handleOrderStatus(payload))
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+export function* onSetOrderStatusStart() {
+  yield takeLatest(ordersTypes.SET_ORDER_STATUS, SetOrderStatus)
+}
+
 export default function* ordersSagas() {
   yield all([
     call(onSaveOrderHistoryStart),
+    call(onSetOrderStatusStart),
     call(onGetUserOrderHistoryStart),
     call(onGetOrderDetailsStart),
+    call(onGetAllOrderHistoryStart),
   ])
 }

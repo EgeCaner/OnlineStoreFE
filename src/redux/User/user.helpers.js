@@ -74,7 +74,7 @@ export const getUserRole = () => {
         resolve(res.data.data)
       })
       .catch(() => {
-        const err = ["Username not found. Please try again."]
+        const err = ["Role not found. Please try again."]
         reject(err)
       })
   })

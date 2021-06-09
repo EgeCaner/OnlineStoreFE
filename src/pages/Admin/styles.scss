@@ -23,6 +23,26 @@
   }
 }
 
+#orderbutton{
+    width: 15.0rem;
+    display: inline-block;
+    margin-top: 15px;
+    display: block;
+    
+    font-size: 1.8rem;
+    line-height: 1;
+    font-weight: 500;
+    text-transform: uppercase;
+    text-align: center;
+    color: white;
+    background: black;
+    padding: 1rem 10px;
+    
+    border: 0;
+    outline: none;
+    cursor: pointer;
+  
+}
 .manageProducts {
 
   h1 {

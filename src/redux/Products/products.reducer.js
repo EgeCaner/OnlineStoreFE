@@ -3,6 +3,7 @@ import productTypes from './products.types';
 
 const INITIAL_STATE = {
   products: [],
+  loading: false,
   product: {},
 };
 
