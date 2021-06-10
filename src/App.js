@@ -135,17 +135,12 @@ const App = (props) => {
           render={() => (
             <WithAuth>
               <DashboardLayout>
-
                 <Order />
               </DashboardLayout>
             </WithAuth>
           )}
         />
-<<<<<<< HEAD
-          <Route
-=======
         <Route
->>>>>>> barisbranch
           path="/orderadmin/:id"
           render={() => (
             <WithAdminAuth>

@@ -201,11 +201,7 @@ const OrderDetails = (order) => {
                     let orderQuantity = row.quantity
                     let productId = row.productId
                     //console.log('col val',columnValue)
-<<<<<<< HEAD
-                    console.log('col val',row)
-=======
-                    console.log("col val", orderQuantity)
->>>>>>> barisbranch
+                    //console.log('col val',row)
 
                     if (columnName == "productId" || columnName == "imageUrl") {
                       columnValue = theProduct

@@ -8,11 +8,10 @@ import {
   TableRow,
   TableCell,
 } from "@material-ui/core"
-import "styles.css"
 import {useDispatch} from "react-redux"
 import {
   setOrderDetails,
-  SetOrderStatus,
+  setOrderStatus,
 } from "./../../redux/Orders/orders.actions"
 import {useSelector} from "react-redux"
 import {apiInstance} from "./../../Utils"
@@ -52,38 +51,6 @@ const styles = {
   width: "10%",
 }
 
-const formatText = (columnName, columnValue) => {
-  switch (columnName) {
-    case "status":
-      if (columnValue == "0") return `Processing...`
-      else if (columnValue == "1") return "Shipped..."
-      else if (columnValue == "2") return "Delivered..."
-      else if (columnValue == "3") return "Refund Request Sent..."
-      else if (columnValue == "4") return "Refunded..."
-    case "price":
-      return `£${columnValue}`
-    case "productId":
-      if (columnValue) {
-        const {imageUrl} = columnValue
-        return <img src={imageUrl} width={250} />
-      } else {
-        return ""
-      }
-    case "imageUrl":
-      if (columnValue) {
-        const {productName} = columnValue
-        return `${productName}`
-      } else {
-        return ""
-      }
-    case "necmo":
-      const {productId} = columnValue
-      return <span onClick={() => handleRefundRequest(productId)}>X</span>
-    default:
-      return columnValue
-  }
-}
-
 const OrderDetails = (order) => {
   const [theProduct, setTheProduct] = useState({})
   const dispatch = useDispatch()
@@ -101,11 +68,11 @@ const OrderDetails = (order) => {
       .then((res) => setTheProduct(res.data.data))
       .catch((e) => console.log(e))
   }
-
+  /* 
   const handleRefundRequest = (productId) => {
     const payloadRefund = {Id: productId, status: 4}
     dispatch(setOrderStatus(payloadRefund))
-  }
+  } */
 
   useEffect(() => {
     if (!isNaN(orderItems[0].productId)) {
@@ -160,6 +127,38 @@ const OrderDetails = (order) => {
       </Table>
     </TableContainer>
   )
+}
+
+const formatText = (columnName, columnValue) => {
+  switch (columnName) {
+    case "status":
+      if (columnValue == "0") return `Processing...`
+      else if (columnValue == "1") return "Shipped..."
+      else if (columnValue == "2") return "Delivered..."
+      else if (columnValue == "3") return "Refund Request Sent..."
+      else if (columnValue == "4") return "Refunded..."
+    case "price":
+      return `£${columnValue}`
+    case "productId":
+      if (columnValue) {
+        const {imageUrl} = columnValue
+        return <img src={imageUrl} width={250} />
+      } else {
+        return ""
+      }
+    case "imageUrl":
+      if (columnValue) {
+        const {productName} = columnValue
+        return `${productName}`
+      } else {
+        return ""
+      }
+    case "necmo":
+      const {productId} = columnValue
+      return <span onClick={() => console.log(productId)}>X</span>
+    default:
+      return columnValue
+  }
 }
 
 export default OrderDetails
