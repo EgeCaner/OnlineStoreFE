@@ -29,19 +29,25 @@ export const setProduct = (product) => ({
   type: productsTypes.SET_PRODUCT,
   payload: product,
 })
+
 export const updateProductStart = (updateData) => ({
   type: productsTypes.UPDATE_PRODUCT_START,
   payload: updateData,
 })
 
-export const addCommentStart = (comment) => ({
-  type: productsTypes.ADD_NEW_COMMENT_START,
-  payload: comment,
+export const approveCommentStart = (commentId) => ({
+  type: productsTypes.APPROVE_COMMENT_START,
+  payload: commentId,
 })
 
-export const deleteCommentStart = (productID) => ({
+export const rejectCommentStart = (commentId) => ({
+  type: productsTypes.REJECT_COMMENT_START,
+  payload: commentId,
+})
+
+export const deleteCommentStart = (commentId) => ({
   type: productsTypes.DELETE_COMMENT_START,
-  payload: productID,
+  payload: commentId,
 })
 
 export const fetchCommentsStart = (productID) => ({
@@ -49,7 +55,16 @@ export const fetchCommentsStart = (productID) => ({
   payload: productID,
 })
 
+export const getUnapprovedComments = () => ({
+  type: productsTypes.GET_UNAPPROVED_COMMENTS,
+})
+
 export const setComments = (comments) => ({
   type: productsTypes.SET_COMMENTS,
   payload: comments,
+})
+
+export const addCommentStart = (commentData) => ({
+  type: productsTypes.ADD_NEW_COMMENT_START,
+  payload: commentData,
 })

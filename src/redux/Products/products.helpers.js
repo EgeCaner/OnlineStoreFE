@@ -130,10 +130,47 @@ export const addCommentsHelper = (payload) => {
     apiInstance
       .put(`Product/AddComment`, payload)
       .then((res) => {
-        /*const dataInput = snapshot.data.data
-        console.log(dataInput)*/
         console.log(res)
+        resolve(res)
+      })
+      .catch((err) => {
+        reject(err)
+      })
+  })
+}
 
+export const getUnapprovedsHelper = () => {
+  return new Promise((resolve, reject) => {
+    apiInstance
+      .get(`Product/GetUnApprovedComments`)
+      .then((res) => {
+        console.log(res)
+        resolve(res.data.data)
+      })
+      .catch((err) => {
+        reject(err)
+      })
+  })
+}
+export const approveCommentsHelper = (id) => {
+  return new Promise((resolve, reject) => {
+    apiInstance
+      .put(`Product/ApproveComment/${id}`)
+      .then((res) => {
+        console.log(res)
+        resolve(res)
+      })
+      .catch((err) => {
+        reject(err)
+      })
+  })
+}
+export const rejectCommentsHelper = (id) => {
+  return new Promise((resolve, reject) => {
+    apiInstance
+      .delete(`Product/RejectComment/${id}`)
+      .then((res) => {
+        console.log(res)
         resolve(res)
       })
       .catch((err) => {

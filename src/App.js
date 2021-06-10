@@ -29,6 +29,7 @@ import Cart from "./pages/Cart"
 import Payment from "./pages/Payment"
 import Order from "./pages/Order"
 import OrderAdmin from "./pages/Admin/orderadmin"
+import CommentsManager from "./pages/Admin/CommentsManager.js"
 
 import Orders from "./pages/Admin/orders"
 import "./default.scss"
@@ -146,6 +147,17 @@ const App = (props) => {
             <WithAdminAuth>
               <DashboardLayout>
                 <OrderAdmin />
+              </DashboardLayout>
+            </WithAdminAuth>
+          )}
+        />
+        <Route
+          exact
+          path="/commentmanage"
+          render={() => (
+            <WithAdminAuth>
+              <DashboardLayout>
+                <CommentsManager />
               </DashboardLayout>
             </WithAdminAuth>
           )}

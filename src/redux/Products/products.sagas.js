@@ -6,6 +6,7 @@ import {
   fetchProductsStart,
   setComments,
   fetchCommentsStart,
+  getUnapprovedComments,
 } from "./products.actions"
 import {
   handleAddProduct,
@@ -15,6 +16,9 @@ import {
   handleUpdateProduct,
   addCommentsHelper,
   fetchCommentsHelper,
+  getUnapprovedsHelper,
+  rejectCommentsHelper,
+  approveCommentsHelper,
 } from "./products.helpers"
 import productsTypes from "./products.types"
 
@@ -120,12 +124,58 @@ export function* handleAddComments({payload}) {
     console.log(comment)
     yield put(fetchCommentsStart(payload.ProductId))
   } catch (err) {
-    //console.log(err);
+    console.log(err)
   }
 }
 
 export function* onAddCommentsStart() {
   yield takeLatest(productsTypes.ADD_NEW_COMMENT_START, handleAddComments)
+}
+
+export function* handleApproveComment({payload}) {
+  try {
+    console.log(payload)
+    const product = yield approveCommentsHelper(payload)
+    console.log(product)
+    yield put(getUnapprovedComments())
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+export function* onApproveCommentStart() {
+  yield takeLatest(productsTypes.APPROVE_COMMENT_START, handleApproveComment)
+}
+export function* handleRejectComment({payload}) {
+  try {
+    console.log(payload)
+    const product = yield rejectCommentsHelper(payload)
+    console.log(product)
+    yield put(getUnapprovedComments())
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+export function* onRejectCommentStart() {
+  yield takeLatest(productsTypes.REJECT_COMMENT_START, handleRejectComment)
+}
+export function* handleGetUnapprovedComments() {
+  try {
+    console.log("getting unapproved comments")
+    const unapproveds = yield getUnapprovedsHelper()
+    console.log(unapproveds)
+    yield put(setComments(unapproveds))
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+export function* onGetUnapprovedComments() {
+  yield takeLatest(
+    productsTypes.GET_UNAPPROVED_COMMENTS,
+    handleGetUnapprovedComments
+  )
 }
 
 export default function* productsSagas() {
@@ -137,5 +187,8 @@ export default function* productsSagas() {
     call(onUpdateProductStart),
     call(onAddCommentsStart),
     call(onFetchCommentsStart),
+    call(onGetUnapprovedComments),
+    call(onRejectCommentStart),
+    call(onApproveCommentStart),
   ])
 }
