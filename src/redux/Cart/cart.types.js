@@ -4,6 +4,7 @@ const cartTypes = {
   REDUCE_CART_ITEM: "REDUCE_CART_ITEM",
   CLEAR_CART: "CLEAR_CART",
   GET_CART: "GET_CART",
+  GET_CARTB: "GET_CARTB",
 }
 
 export default cartTypes

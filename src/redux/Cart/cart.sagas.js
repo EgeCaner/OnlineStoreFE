@@ -129,11 +129,24 @@ export function* onClearCart() {
   yield takeLatest(cartTypes.CLEAR_CART, handleClearCart)
 }
 
+export function* handleGetCartB() {
+  let currentCart = yield getCart().then((res) => {
+    return res.data.data.items
+  })
+  console.log(currentCart)
+  yield put(getCartA(currentCart))
+}
+
+export function* onGetCartB() {
+  yield takeLatest(cartTypes.GET_CARTB, handleGetCartB)
+}
+
 export default function* cartSagas() {
   yield all([
     call(onReduceCartItem),
     call(onRemoveCartItem),
     call(onAddToCart),
     call(onClearCart),
+    call(onGetCartB),
   ])
 }

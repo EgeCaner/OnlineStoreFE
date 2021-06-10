@@ -94,9 +94,19 @@ const PaymentDetails = () => {
 
     apiInstance
       .post("/Order/Add", {
-        Quantity: itemCount,
-        Price: total,
+        Quantity: cartItems[0].quantity,
+        Price: cartItems[0].quantity * cartItems[0].price,
         ProductId: cartItems[0].productId,
+      })
+      .then((res) => {
+        console.log(res)
+      })
+
+    apiInstance
+      .post("/Order/Add", {
+        Quantity: cartItems[1].quantity,
+        Price: cartItems[1].quantity * cartItems[1].price,
+        ProductId: cartItems[1].productId,
       })
       .then((res) => {
         console.log(res)
