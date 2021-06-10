@@ -70,11 +70,6 @@ const OrderDetails = (order) => {
       .catch((e) => console.log(e))
   }
 
-  const handleRefundRequest = (productId) => {
-    const payloadRefund = {Id: productId, status: 4}
-    dispatch(SetOrderStatus(payloadRefund))
-  }
-
   useEffect(() => {
     if (!isNaN(orderItems[0].productId)) {
       let pro = getProduct(orderItems)
