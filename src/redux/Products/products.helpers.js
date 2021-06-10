@@ -111,10 +111,12 @@ export const handleFetchProduct = (productID) => {
 export const fetchCommentsHelper = (productID) => {
   return new Promise((resolve, reject) => {
     apiInstance
-      .get(`Product/GetAllComments/${productID}`, {})
+      .get(`Product/GetAllComments/${productID}`)
       .then((snapshot) => {
+        console.log(snapshot)
         const dataInput = snapshot.data.data
-        console.log(dataInput).resolve(dataInput)
+        console.log(dataInput)
+        resolve(dataInput)
       })
       .catch((err) => {
         reject(err)
@@ -122,11 +124,11 @@ export const fetchCommentsHelper = (productID) => {
   })
 }
 
-export const addCommentsHelper = (comment) => {
-  console.log(comment)
+export const addCommentsHelper = (payload) => {
+  console.log(payload)
   return new Promise((resolve, reject) => {
     apiInstance
-      .put(`Product/AddComment`, comment)
+      .put(`Product/AddComment`, payload)
       .then((res) => {
         /*const dataInput = snapshot.data.data
         console.log(dataInput)*/

@@ -141,7 +141,11 @@ const App = (props) => {
             </WithAuth>
           )}
         />
+<<<<<<< HEAD
           <Route
+=======
+        <Route
+>>>>>>> barisbranch
           path="/orderadmin/:id"
           render={() => (
             <WithAdminAuth>
@@ -165,9 +169,11 @@ const App = (props) => {
           exact
           path="/orders"
           render={() => (
-            <MainLayout>
-              <Orders />
-            </MainLayout>
+            <WithAdminAuth>
+              <MainLayout>
+                <Orders />
+              </MainLayout>
+            </WithAdminAuth>
           )}
         />
       </Switch>

@@ -101,9 +101,9 @@ export function* onUpdateProductStart() {
 export function* handleFetchComments({payload}) {
   try {
     console.log(payload)
-    const product = yield fetchCommentsHelper(payload)
-    console.log(product)
-    yield put(setComments(product))
+    const commentsData = yield fetchCommentsHelper(payload)
+    console.log(commentsData)
+    yield put(setComments(commentsData))
   } catch (err) {
     //console.log(err);
   }
@@ -118,7 +118,7 @@ export function* handleAddComments({payload}) {
     console.log(payload)
     const comment = yield addCommentsHelper(payload)
     console.log(comment)
-    yield put(fetchCommentsStart())
+    yield put(fetchCommentsStart(payload.ProductId))
   } catch (err) {
     //console.log(err);
   }

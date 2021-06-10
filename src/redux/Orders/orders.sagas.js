@@ -5,10 +5,15 @@ import {
   handleGetUserOrderHistory,
   handleGetOrder,
   handleGetAllOrders,
-  handleOrderStatus
+  handleOrderStatus,
 } from "./orders.helpers"
 import {clearCart} from "./../Cart/cart.actions"
-import {setUserOrderHistory, setOrderDetails,setAllOrderHistory} from "./orders.actions"
+import {
+  setUserOrderHistory,
+  setOrderDetails,
+  setAllOrderHistory,
+  getOrderDetailsStart,
+} from "./orders.actions"
 import {useSelector} from "react-redux"
 
 export function* getUserOrderHistory() {
@@ -40,10 +45,7 @@ export function* getAllOrderHistory({payload}) {
 }
 
 export function* onGetAllOrderHistoryStart() {
-  yield takeLatest(
-    ordersTypes.GET_ALL_ORDER_HISTORY_START,
-    getAllOrderHistory
-  )
+  yield takeLatest(ordersTypes.GET_ALL_ORDER_HISTORY_START, getAllOrderHistory)
 }
 
 export function* saveOrder({payload}) {
@@ -80,9 +82,9 @@ export function* onGetOrderDetailsStart() {
 
 export function* SetOrderStatus({payload}) {
   try {
-    console.log("sass",payload)
-
-    yield put(handleOrderStatus(payload))
+    console.log("sass", payload)
+    const orderStatusRes = yield handleOrderStatus(payload)
+    yield put(getOrderDetailsStart(payload))
   } catch (err) {
     console.log(err)
   }
