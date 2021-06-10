@@ -37,7 +37,9 @@ const SignIn = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    
     dispatch(usernameSignInStart({username, password}))
+   
   }
 
   const handleGoogleSignIn = () => {

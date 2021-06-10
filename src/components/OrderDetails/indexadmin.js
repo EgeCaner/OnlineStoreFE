@@ -172,8 +172,9 @@ const formatText = (columnName, columnValue, orderId, orderQuantity) => {
                     let columnValue = row[columnName]
                     let orderId = row.id
                     let orderQuantity = row.quantity
+                    let productId = row.productId
                     //console.log('col val',columnValue)
-                    console.log('col val',orderQuantity)
+                    console.log('col val',row)
 
                     if (columnName == "productId" || columnName == "imageUrl") {
                       columnValue = theProduct

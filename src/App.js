@@ -28,6 +28,8 @@ import ProductDetails from "./pages/ProductDetails"
 import Cart from "./pages/Cart"
 import Payment from "./pages/Payment"
 import Order from "./pages/Order"
+import OrderAdmin from "./pages/Admin/orderadmin"
+
 import Orders from "./pages/Admin/orders"
 import "./default.scss"
 
@@ -133,19 +135,20 @@ const App = (props) => {
           render={() => (
             <WithAuth>
               <DashboardLayout>
+
                 <Order />
               </DashboardLayout>
             </WithAuth>
           )}
         />
-                <Route
+          <Route
           path="/orderadmin/:id"
           render={() => (
-            <WithAuth>
+            <WithAdminAuth>
               <DashboardLayout>
-                <Order />
+                <OrderAdmin />
               </DashboardLayout>
-            </WithAuth>
+            </WithAdminAuth>
           )}
         />
         <Route

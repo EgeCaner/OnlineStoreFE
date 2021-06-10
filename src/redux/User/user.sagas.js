@@ -45,7 +45,8 @@ export function* getSnapshotFromUserAuth(user, additionalData = {}) {
 export function* usernameSignIn({payload: {username, password}}) {
   try {
     const userRes = yield signInWithUsernameAndPassword(username, password)
-
+   
+    console.log("heyhey",userRes)
     setToken(userRes.data.data)
     const userRole = yield getUserRole()
     yield put(signInSuccess({token: userRes.data.data, userRoles: [userRole]}))
