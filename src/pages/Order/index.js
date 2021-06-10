@@ -11,12 +11,12 @@ const mapState = ({ordersData}) => ({
 const Order = () => {
   const {id} = useParams()
   const dispatch = useDispatch()
-  const {orderDetails} = useSelector(mapState)
-  const {price} = orderDetails
-
   useEffect(() => {
     dispatch(getOrderDetailsStart(id))
   }, [])
+  const {orderDetails} = useSelector(mapState)
+  while (orderDetails == undefined) {}
+  const {price} = orderDetails
 
   return (
     <div>

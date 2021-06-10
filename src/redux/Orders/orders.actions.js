@@ -9,15 +9,14 @@ export const getUserOrderHistory = () => ({
   type: ordersTypes.GET_USER_ORDER_HISTORY_START,
 })
 
-export const getAllOrderHistory = orderdata => ({
+export const getAllOrderHistory = (orderdata) => ({
   type: ordersTypes.GET_ALL_ORDER_HISTORY_START,
   payload: orderdata,
 })
-export const SetOrderStatus = statusData => ({
+export const SetOrderStatus = (statusData) => ({
   type: ordersTypes.SET_ORDER_STATUS,
   payload: statusData,
 })
-
 
 export const setUserOrderHistory = (history) => ({
   type: ordersTypes.SET_USER_ORDER_HISTORY,

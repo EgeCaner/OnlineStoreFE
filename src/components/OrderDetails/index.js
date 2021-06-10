@@ -11,8 +11,9 @@ import {
 import {useDispatch} from "react-redux"
 import {
   setOrderDetails,
-  setOrderStatus,
+  SetOrderStatus,
 } from "./../../redux/Orders/orders.actions"
+import {store} from "./../../redux/createStore"
 import {useSelector} from "react-redux"
 import {apiInstance} from "./../../Utils"
 import {handleFetchProduct} from "./../../redux/Products/products.helpers"
@@ -42,7 +43,7 @@ const columns = [
   },
   {
     id: "necmo",
-    label: "Refunded",
+    label: "Refund Request",
   },
 ]
 
@@ -68,11 +69,11 @@ const OrderDetails = (order) => {
       .then((res) => setTheProduct(res.data.data))
       .catch((e) => console.log(e))
   }
-  /* 
+
   const handleRefundRequest = (productId) => {
     const payloadRefund = {Id: productId, status: 4}
-    dispatch(setOrderStatus(payloadRefund))
-  } */
+    dispatch(SetOrderStatus(payloadRefund))
+  }
 
   useEffect(() => {
     if (!isNaN(orderItems[0].productId)) {
@@ -135,8 +136,8 @@ const formatText = (columnName, columnValue) => {
       if (columnValue == "0") return `Processing...`
       else if (columnValue == "1") return "Shipped..."
       else if (columnValue == "2") return "Delivered..."
-      else if (columnValue == "3") return "Refund Request Sent..."
-      else if (columnValue == "4") return "Refunded..."
+      else if (columnValue == "4") return "Refund Request Sent..."
+      else if (columnValue == "5") return "Refunded..."
     case "price":
       return `£${columnValue}`
     case "productId":
@@ -155,7 +156,11 @@ const formatText = (columnName, columnValue) => {
       }
     case "necmo":
       const {productId} = columnValue
-      return <span onClick={() => console.log(productId)}>X</span>
+      const handleRefundRequest = (productId) => {
+        const payloadRefund = {Id: productId, status: 4}
+        store.dispatch(SetOrderStatus(payloadRefund))
+      }
+      return <span onClick={() => handleRefundRequest(productId)}>X</span>
     default:
       return columnValue
   }

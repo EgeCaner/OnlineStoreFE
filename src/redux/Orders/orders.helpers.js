@@ -50,7 +50,11 @@ export const handleGetOrder = (orderId) => {
 export const handleOrderStatus = (payload) => {
   return new Promise((resolve, reject) => {
     apiInstance
-      .put(`Order/ChangeStatus`,{Id: payload.id, Status: payload.e, Quantity: payload.quant })
+      .put(`Order/ChangeStatus`, {
+        Id: payload.Id,
+        Status: payload.status,
+        Quantity: payload.quant,
+      })
       .then((res) => {
         console.log(res)
         resolve(res)
@@ -61,19 +65,19 @@ export const handleOrderStatus = (payload) => {
   })
 }
 
-export const handleGetAllOrders = (  ) => {
+export const handleGetAllOrders = () => {
   return new Promise((resolve, reject) => {
     apiInstance
       .get(`Order/Getall`)
       .then((snap) => {
-        console.log("heyy",snap)
+        console.log("heyy", snap)
         let OrderDetailsdata = snap.data.data.filter((order) => {
           return order
         })
         const data = [...OrderDetailsdata]
 
         resolve({
-         data,
+          data,
         })
       })
       .catch((err) => {
