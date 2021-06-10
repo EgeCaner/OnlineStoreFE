@@ -8,8 +8,12 @@ import {
   TableRow,
   TableCell,
 } from "@material-ui/core"
+import "styles.css"
 import {useDispatch} from "react-redux"
-import {setOrderDetails} from "./../../redux/Orders/orders.actions"
+import {
+  setOrderDetails,
+  SetOrderStatus,
+} from "./../../redux/Orders/orders.actions"
 import {useSelector} from "react-redux"
 import {apiInstance} from "./../../Utils"
 import {handleFetchProduct} from "./../../redux/Products/products.helpers"
@@ -37,10 +41,10 @@ const columns = [
     id: "quantity",
     label: "Amount",
   },
-  /*   {
-    id: "categoryId",
-    label: "Refund",
-  }, */
+  {
+    id: "necmo",
+    label: "Refunded",
+  },
 ]
 
 const styles = {
@@ -55,7 +59,7 @@ const formatText = (columnName, columnValue) => {
       else if (columnValue == "1") return "Shipped..."
       else if (columnValue == "2") return "Delivered..."
       else if (columnValue == "3") return "Refund Request Sent..."
-    /* else if (columnValue == "4") return "Refunded..."*/
+      else if (columnValue == "4") return "Refunded..."
     case "price":
       return `£${columnValue}`
     case "productId":
@@ -72,6 +76,9 @@ const formatText = (columnName, columnValue) => {
       } else {
         return ""
       }
+    case "necmo":
+      const {productId} = columnValue
+      return <span onClick={() => handleRefundRequest(productId)}>X</span>
     default:
       return columnValue
   }
@@ -93,6 +100,11 @@ const OrderDetails = (order) => {
       .get(`Product/GetById/${orderItems[0].productId}`)
       .then((res) => setTheProduct(res.data.data))
       .catch((e) => console.log(e))
+  }
+
+  const handleRefundRequest = (productId) => {
+    const payloadRefund = {Id: productId, status: 4}
+    dispatch(setOrderStatus(payloadRefund))
   }
 
   useEffect(() => {
@@ -128,10 +140,13 @@ const OrderDetails = (order) => {
                   {columns.map((col, pos) => {
                     const columnName = col.id
                     let columnValue = row[columnName]
-                    if (columnName == "productId" || columnName == "imageUrl") {
+                    if (
+                      columnName == "productId" ||
+                      columnName == "imageUrl" ||
+                      columnName == "necmo"
+                    ) {
                       columnValue = theProduct
                     }
-
                     return (
                       <TableCell key={pos} style={styles}>
                         {formatText(columnName, columnValue)}

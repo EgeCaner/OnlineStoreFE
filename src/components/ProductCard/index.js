@@ -89,7 +89,7 @@ const ProductCard = ({}) => {
             editing={false}
             starCount={5}
             value={rating}
-            size={200}
+            size={500}
             style={{
               margin: 0,
               marginRight: 6,
@@ -113,7 +113,13 @@ const ProductCard = ({}) => {
       <Button
         className="button"
         onClick={() =>
-          dispatch(addCommentStart({description: com, ProductId: productId}))
+          dispatch(
+            addCommentStart({
+              commentorName: "bariscan",
+              description: com,
+              ProductId: productId,
+            })
+          )
         }
       >
         Submit

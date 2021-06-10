@@ -138,14 +138,14 @@ const App = (props) => {
             </WithAuth>
           )}
         />
-                <Route
+        <Route
           path="/orderadmin/:id"
           render={() => (
-            <WithAuth>
+            <WithAdminAuth>
               <DashboardLayout>
                 <Order />
               </DashboardLayout>
-            </WithAuth>
+            </WithAdminAuth>
           )}
         />
         <Route
@@ -162,9 +162,11 @@ const App = (props) => {
           exact
           path="/orders"
           render={() => (
-            <MainLayout>
-              <Orders />
-            </MainLayout>
+            <WithAdminAuth>
+              <MainLayout>
+                <Orders />
+              </MainLayout>
+            </WithAdminAuth>
           )}
         />
       </Switch>
