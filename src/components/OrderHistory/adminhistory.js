@@ -45,7 +45,7 @@ const formatText = (columnName, columnValue,status) => {
 
 const OrderAdminHistory = ({orders}) => {
   const history = useHistory()
-  console.log('sa',orders.length)
+  //console.log('sa',orders.length)
 
   return (
     <TableContainer>
@@ -81,7 +81,7 @@ const OrderAdminHistory = ({orders}) => {
                     const status2 = row.status
                     const formattedText = formatText(columnName, columnValue, status2)
                     console.log('col:',columnName)
-                    console.log('sol:',status)
+                        console.log('sol:',status)
                     return (
                       <TableCell key={pos} style={styles}>
                         {formattedText}

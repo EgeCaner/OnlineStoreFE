@@ -28,6 +28,7 @@ import ProductDetails from "./pages/ProductDetails"
 import Cart from "./pages/Cart"
 import Payment from "./pages/Payment"
 import Order from "./pages/Order"
+import Analytics from "./pages/Analytics/index"
 import OrderAdmin from "./pages/Admin/orderadmin"
 
 import Orders from "./pages/Admin/orders"
@@ -68,6 +69,16 @@ const App = (props) => {
             <MainLayout>
               <Search />
             </MainLayout>
+          )}
+        />
+        <Route
+          path="/Analytics"
+          render={() => (
+            <WithAdminAuth>
+            <MainLayout>
+              <Analytics />
+            </MainLayout>
+            </WithAdminAuth>
           )}
         />
         <Route
@@ -165,9 +176,11 @@ const App = (props) => {
           exact
           path="/orders"
           render={() => (
+            <WithAdminAuth>
             <MainLayout>
               <Orders />
             </MainLayout>
+            </WithAdminAuth>
           )}
         />
       </Switch>

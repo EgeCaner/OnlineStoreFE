@@ -7,6 +7,7 @@ import {
   deleteProductStart,
   setProduct,
   updateProductStart,
+  discountProductStart
 } from "./../../redux/Products/products.actions"
 import Modal from "./../../components/Modal"
 import FormInput from "./../../components/forms/FormInput"
@@ -15,22 +16,27 @@ import Button from "./../../components/forms/Button"
 import LoadMore from "./../../components/LoadMore"
 import CKEditor from "ckeditor4-react"
 import "./styles.scss"
+import{ checkUserIsAdmin,checkUserIsProduct,checkUserIsSales} from "./../../Utils/index"
 
-const mapState = ({productsData}) => ({
+const mapState = ({productsData, user}) => ({
   products: productsData.products,
+  currentUser: user.currentUser
 })
 
 let quant = 0;
 const Admin = (props) => {
-  const {products} = useSelector(mapState)
+  const {products, currentUser} = useSelector(mapState)
   const dispatch = useDispatch()
   const [hideModal, setHideModal] = useState(true)
   const [categoryId, setCategoryId] = useState("0")
   const [quantity, setQuantity] = useState("0")
   const [productName, setProductName] = useState("")
   const [imageUrl, setImageUrl] = useState("")
+  const [productIdD, setproductIdD] = useState("")
+  const [discount, setdiscount] = useState("0")
   const [price, setPrice] = useState("0")
   const [description, setDescription] = useState("")
+
 
   const {data, queryDoc, isLastPage} = products
 
@@ -100,22 +106,34 @@ const Admin = (props) => {
       })
     )
   }
+  const handleSubmitDiscount = () => {
+    
+      console.log('ID',productIdD)
+      console.log('dscount',discount)
+      dispatch(discountProductStart({
+        productIdD,
+        discount
+      })
+
+      )
+  }
 
   const configLoadMore = {
     onLoadMoreEvt: handleLoadMore,
   }
 
+
   return (
     <div className="admin">
-      <div className="callToActions">
+       {checkUserIsProduct(currentUser ) &&  <div className="callToActions">
         <ul>
           <li>
-            <Button onClick={() => toggleModal()}>Add new product</Button>
+           
+      <Button onClick={() => toggleModal()}>Add new product</Button>
           </li>
         </ul>
-      </div>
-
-      <Modal {...configModal}>
+      </div>}
+<Modal {...configModal}>
         <div className="addNewProductForm">
           <form onSubmit={handleSubmit}>
             <h2>Add new product</h2>
@@ -136,12 +154,13 @@ const Admin = (props) => {
                   name: "Cameras",
                 },
                 {
-                  value: "3",
+                  value: "1",
                   name: "Phones",
                 },
               ]}
               handleChange={(e) => setCategoryId(e.target.value)}
             />
+            
 
             <FormInput
               label="Name"
@@ -173,12 +192,36 @@ const Admin = (props) => {
 
             <br />
 
-            <Button type="submit">Add product</Button>
+          <Button type="submit" id ='orderbutton2'>Add product</Button>
           </form>
         </div>
       </Modal>
-      <Link id ='orderbutton' to="/orders">Orders</Link>      
- 
+      <Link id ='orderbutton' to="/orders">Orders</Link> 
+      
+      {checkUserIsSales(currentUser ) && <Link id ='orderbutton' to="/Analytics">Analytics</Link> }
+      <div>
+      
+      {checkUserIsSales(currentUser ) && <form id= "adminorderform">
+      <label> <h4>Discount Form:</h4></label>
+      <br></br>
+
+  <label id="adminorderlabel">
+  ProductId:
+
+    <input id="adminorderinput1" type="text" name="Product Id" onChange = {(e) => setproductIdD(e.target.value)}/>
+    
+  </label>
+  <br></br>
+  <label id="adminorderlabel">
+  Discount Rate:
+    <input id="adminorderinput2" type="text" name="Discount Rate" onChange = {(e) => setdiscount(e.target.value)}/>
+  </label>
+  <br></br>
+
+</form>}
+<br></br>
+{checkUserIsSales(currentUser ) && <Button onClick={() => handleSubmitDiscount()}>Submit</Button>}
+      </div>
       <div className="manageProducts">
         <table border="0" cellPadding="0" cellSpacing="0">
           <tbody>
@@ -204,7 +247,7 @@ const Admin = (props) => {
                     products.length > 0 &&
                     products.map((product, index) => {
                         const {productName, imageUrl, price, productId, quantity, isdelete} = product
-                        console.log("quantity:",{quantity},"name:", {productName})
+                        
                         return (
                           <tr key={index}>
                             <td>

@@ -22,6 +22,68 @@
 
   }
 }
+#adminorderlabel{
+  display: inline-block;
+  
+}
+#adminorderinput1{
+  display: inline-block;
+  margin-left: 49px;
+  border-radius: 10px;
+}
+
+#adminorderform{
+  margin-top: 15px;
+  display: inline-block;
+  border-radius: 10px;
+  border: 1px solid;
+  padding: 10px;
+  background-color: #d3d3d342;
+}
+#adminorderinput2{
+  display: inline-block;
+  margin-left: 15px;
+  border-radius: 10px;
+}
+#orderbutton2{
+  width: 100%;
+  display: inline-block;
+  margin-top: 15px;
+ 
+  
+  font-size: 1.0rem;
+  line-height: 1;
+  font-weight: 500;
+  text-transform: uppercase;
+  text-align: center;
+  color: white;
+  background: black;
+  padding: 1rem 10px;
+  
+  border: 0;
+  outline: none;
+  cursor: pointer;
+}
+#orderbutton2{
+  width: 1.0rem;
+  display: inline-block;
+  margin-top: 15px;
+  display: block;
+  
+  font-size: 1.8rem;
+  line-height: 1;
+  font-weight: 500;
+  text-transform: uppercase;
+  text-align: center;
+  color: white;
+  background: black;
+  padding: 1rem 10px;
+  
+  border: 0;
+  outline: none;
+  cursor: pointer;
+
+}
 
 #orderbutton{
     width: 15.0rem;

@@ -4,7 +4,6 @@ import thunk from 'redux-thunk';
 import createSagaMiddle from 'redux-saga';
 import { persistStore } from 'redux-persist';
 import { composeWithDevTools } from 'redux-devtools-extension';
-
 import rootReducer from './rootReducer';
 import rootSaga from './rootSaga';
 

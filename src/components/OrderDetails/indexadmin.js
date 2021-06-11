@@ -21,7 +21,9 @@ const OrderDetails = (order) => {
 const dispatch = useDispatch()
 
 
-  
+//delivery ID, customer
+//ID, product ID, quantity, total price, delivery address, and a field showing whether the
+//delivery has been completed or not
 const columns = [
   {
     id: "status",
@@ -53,43 +55,44 @@ const styles = {
 }
 
 
-const handleChange = (e, id, quant) => {
+const handleChange = (e, id, quant,productId) => {
   dispatch(
     SetOrderStatus({
       e,
       id,
-      quant
+      quant,
+      productId
     })
   )
   //this.props.handlePeriodChange(e);
-  console.log('hety22',id)
-  console.log(e)
+  //console.log('hety22',id)
+  //console.log(e)
 
  
 }
 
-const formatText = (columnName, columnValue, orderId, orderQuantity) => {
+const formatText = (columnName, columnValue, orderId, orderQuantity, productId) => {
   switch (columnName) {
     case "status":
-      if (columnValue == "0") return (<select name='option'   onChange={(val) => handleChange(val.target.value, orderId, orderQuantity)} >
+      if (columnValue == "0") return (<select name='option'   onChange={(val) => handleChange(val.target.value, orderId, orderQuantity, productId)} >
       <option value="0">Processing</option>
       <option value="1">Shipped</option>
       <option value="2">Delivered</option>
       <option value="5">Refunded</option>
   </select>)
-      else if (columnValue == "1") return (<select name='option' onChange={(val) => handleChange(val.target.value, orderId, orderQuantity)}>
+      else if (columnValue == "1") return (<select name='option' onChange={(val) => handleChange(val.target.value, orderId, orderQuantity, productId)}>
       <option value="1">Shipped</option>
       <option value="0">Processing</option>
       <option value="2">Delivered</option>
       <option value="5">Refunded</option>
   </select>)
-      else if (columnValue == "2") return (<select name='option'  onChange={(val) => handleChange(val.target.value, orderId, orderQuantity)}>
+      else if (columnValue == "2") return (<select name='option'  onChange={(val) => handleChange(val.target.value, orderId, orderQuantity, productId)}>
       <option value="2">Delivered</option>
       <option value="1">Shipped</option>
       <option value="0">Processing</option>
       <option value="5">Refunded</option>
   </select>)
-      else if (columnValue == "5")  return (<select name='option'  onChange={(val) => handleChange(val.target.value, orderId, orderQuantity)} >
+      else if (columnValue == "5")  return (<select name='option'  onChange={(val) => handleChange(val.target.value, orderId, orderQuantity, productId)} >
       <option value="5">Refunded</option>
       <option value="1">Shipped</option>
       <option value="0">Processing</option>
@@ -120,7 +123,7 @@ const formatText = (columnName, columnValue, orderId, orderQuantity) => {
   const [theProduct, setTheProduct] = useState({})
   //const dispatch = useDispatch()
   const orderItems = [order.order]
-  console.log(orderItems)
+  //console.log(orderItems)
   useEffect(() => {
     return () => {
       dispatch(setOrderDetails({}))
@@ -151,7 +154,8 @@ const formatText = (columnName, columnValue, orderId, orderQuantity) => {
             {columns.map((col, pos) => {
               return (
                 <TableCell key={pos} style={styles}>
-                  {col.label}
+                  
+                  {col.label }
                 </TableCell>
               )
             })}
@@ -174,7 +178,7 @@ const formatText = (columnName, columnValue, orderId, orderQuantity) => {
                     let orderQuantity = row.quantity
                     let productId = row.productId
                     //console.log('col val',columnValue)
-                    console.log('col val',row)
+                    //console.log('col val',productId)
 
                     if (columnName == "productId" || columnName == "imageUrl") {
                       columnValue = theProduct
@@ -182,7 +186,7 @@ const formatText = (columnName, columnValue, orderId, orderQuantity) => {
 
                     return (
                       <TableCell key={pos} style={styles}>
-                        {formatText(columnName, columnValue, orderId, orderQuantity)}
+                        {formatText(columnName, columnValue, orderId, orderQuantity,productId)}
                       </TableCell>
                     )
                   })}

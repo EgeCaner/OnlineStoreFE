@@ -50,10 +50,39 @@ export const handleGetOrder = (orderId) => {
 export const handleOrderStatus = (payload) => {
   return new Promise((resolve, reject) => {
     apiInstance
-      .put(`Order/ChangeStatus`,{Id: payload.id, Status: payload.e, Quantity: payload.quant })
+      .put(`Order/ChangeStatus`,{Id: payload.id, Status: payload.e, Quantity: payload.quant,ProductId: payload.productId })
       .then((res) => {
         console.log(res)
         resolve(res)
+      })
+      .catch((err) => {
+        reject(err)
+      })
+  })
+}
+
+
+export const handleGetOrderAnalytics = (payload  ) => {
+  return new Promise((resolve, reject) => {
+    var now = (payload.selection.endDate).toISOString()
+    
+    
+    
+    var lastWeek = (payload.selection.startDate).toISOString();
+   
+    console.log ("dalga",lastWeek)
+    apiInstance
+      .get(`Order/GetSaleStatistic/${lastWeek}/${now}`)
+      .then((snap) => {
+        console.log("heyy",snap)
+        let AnalyticsData = snap.data.data
+        
+        const data = [...AnalyticsData]
+
+        resolve({
+          ...AnalyticsData,
+        })
+        return AnalyticsData
       })
       .catch((err) => {
         reject(err)

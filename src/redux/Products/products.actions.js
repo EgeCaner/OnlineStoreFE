@@ -25,6 +25,11 @@ export const fetchProductStart = (productID) => ({
   payload: productID,
 })
 
+export const discountProductStart = (payload) => ({
+  type: productsTypes.DISCOUNT_PRODUCT_START,
+  payload: payload,
+})
+
 export const setProduct = (product) => ({
   type: productsTypes.SET_PRODUCT,
   payload: product,

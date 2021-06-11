@@ -4,14 +4,15 @@ import {getAllOrderHistory} from "./../../redux/Orders/orders.actions"
 import OrderAdminHistory from "./../../components/OrderHistory/adminhistory"
 import "./styles.scss"
 
-const mapState = ({user, ordersData}) => ({
+const mapState = ({user, ordersData,orderAnalytics}) => ({
   currentUser: user.currentUser,
   orderHistory: ordersData.orderHistory,
+  orderAnalytics: ordersData.orderAnalytics
 })
 
 const Orders = (props) => {
   const dispatch = useDispatch()
-  const {currentUser, orderHistory} = useSelector(mapState)
+  const {currentUser, orderHistory, orderAnalytics} = useSelector(mapState)
 
   useEffect(() => {
     dispatch(getAllOrderHistory())

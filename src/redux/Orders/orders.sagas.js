@@ -5,10 +5,12 @@ import {
   handleGetUserOrderHistory,
   handleGetOrder,
   handleGetAllOrders,
-  handleOrderStatus
+  handleOrderStatus,
+  handleGetOrderAnalytics
+  
 } from "./orders.helpers"
 import {clearCart} from "./../Cart/cart.actions"
-import {setUserOrderHistory, setOrderDetails,setAllOrderHistory} from "./orders.actions"
+import {setUserOrderHistory, setOrderDetails,setAllOrderHistory,setOrderAnalytics} from "./orders.actions"
 import {useSelector} from "react-redux"
 
 export function* getUserOrderHistory() {
@@ -77,6 +79,20 @@ export function* getOrderDetails({payload}) {
 export function* onGetOrderDetailsStart() {
   yield takeLatest(ordersTypes.GET_ORDER_DETAILS_START, getOrderDetails)
 }
+export function* onGetOrderAnalyticsStart() {
+  yield takeLatest(ordersTypes.GET_ORDER_ANALYTICS, getOrderAnalytics)
+}
+export function* getOrderAnalytics({payload}) {
+  try {
+    console.log(payload)
+    const stats = yield handleGetOrderAnalytics(payload)
+    console.log("gsda",stats)
+    yield put(setOrderAnalytics(stats))
+    
+  } catch (err) {
+    console.log(err)
+  }
+}
 
 export function* SetOrderStatus({payload}) {
   try {
@@ -99,5 +115,6 @@ export default function* ordersSagas() {
     call(onGetUserOrderHistoryStart),
     call(onGetOrderDetailsStart),
     call(onGetAllOrderHistoryStart),
+    call(onGetOrderAnalyticsStart)
   ])
 }

@@ -22,10 +22,10 @@ const Product = (Product) => {
   }
 
   return (
-    <div className="product">
+    <div className="product" id="productdiv">
       <div className="thumb">
         <Link to={`/product/${productId}`}>
-          <img src={imageUrl} alt={productName} />
+          <img id="imgproduct" src={imageUrl} alt={productName} />
         </Link>
       </div>
 

@@ -17,6 +17,15 @@ export const SetOrderStatus = statusData => ({
   type: ordersTypes.SET_ORDER_STATUS,
   payload: statusData,
 })
+export const getOrderAnalytics = payload => ({
+  type: ordersTypes.GET_ORDER_ANALYTICS,
+  payload: payload,
+})
+export const setOrderAnalytics = payload => ({
+  type: ordersTypes.SET_ORDER_ANALYTICS,
+  payload: payload,
+})
+
 
 
 export const setUserOrderHistory = (history) => ({
