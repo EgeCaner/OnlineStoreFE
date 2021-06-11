@@ -8,7 +8,7 @@ import {
 
 const Item = (product) => {
   const dispatch = useDispatch()
-  const {productName, imageUrl, price, quantity, productId} = product
+  const {productName, imageUrl, discountedPrice, quantity, productId} = product
 
   const handleRemoveCartItem = (productId) => {
     console.log(productId)
@@ -44,7 +44,7 @@ const Item = (product) => {
               {` >`}
             </span>
           </td>
-          <td>£{price}</td>
+          <td>£{discountedPrice}</td>
           <td align="center">
             <span
               className="cartBtn remove"

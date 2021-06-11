@@ -7,8 +7,13 @@ import {addProduct} from "./../../../redux/Cart/cart.actions"
 const Product = (Product) => {
   const dispatch = useDispatch()
   const history = useHistory()
-  const {productId, imageUrl, productName, price} = Product
-  if (!productId || !imageUrl || !productName || price === "undefined")
+  const {productId, imageUrl, productName, discountedPrice} = Product
+  if (
+    !productId ||
+    !imageUrl ||
+    !productName ||
+    discountedPrice === "undefined"
+  )
     return null
 
   const configAddToCartBtn = {
@@ -37,7 +42,7 @@ const Product = (Product) => {
             </span>
           </li>
           <li>
-            <span className="price">£{price}</span>
+            <span className="price">£{discountedPrice}</span>
           </li>
           <li>
             <div className="addToCart">

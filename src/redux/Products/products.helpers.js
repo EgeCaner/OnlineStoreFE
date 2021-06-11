@@ -111,9 +111,9 @@ export const handleFetchProduct = (productID) => {
 export const handleDiscountProduct = (payload) => {
   console.log(payload)
   return new Promise((resolve, reject) => {
-    console.log("asd",payload.discountRate)
+    console.log("asd", payload.discountRate)
     apiInstance
-      .put(`Product/SetDiscount/${payload.discount}/${payload.productIdD}`, {
+      .put(`Product/setdiscount/${payload.discount}/${payload.productIdD}`, {
         Id: payload.productId,
         discRate: payload.discountRate,
       })
@@ -126,7 +126,6 @@ export const handleDiscountProduct = (payload) => {
       })
   })
 }
-
 
 export const fetchCommentsHelper = (productID) => {
   return new Promise((resolve, reject) => {

@@ -42,7 +42,7 @@ const columns = [
     label: "Amount",
   },
   {
-    id: "necmo",
+    id: "id",
     label: "Refund Request",
   },
 ]
@@ -103,12 +103,11 @@ const OrderDetails = (order) => {
                   {columns.map((col, pos) => {
                     const columnName = col.id
                     let columnValue = row[columnName]
-                    if (
-                      columnName == "productId" ||
-                      columnName == "imageUrl" ||
-                      columnName == "necmo"
-                    ) {
+                    if (columnName == "productId" || columnName == "imageUrl") {
                       columnValue = theProduct
+                    } else if (columnName == "id") {
+                      columnValue = row
+                      console.log(columnValue)
                     }
                     return (
                       <TableCell key={pos} style={styles}>
@@ -131,6 +130,7 @@ const formatText = (columnName, columnValue) => {
       if (columnValue == "0") return `Processing...`
       else if (columnValue == "1") return "Shipped..."
       else if (columnValue == "2") return "Delivered..."
+      else if (columnValue == "3") return "Cancelled..."
       else if (columnValue == "4") return "Refund Request Sent..."
       else if (columnValue == "5") return "Refunded..."
     case "price":
@@ -149,10 +149,13 @@ const formatText = (columnName, columnValue) => {
       } else {
         return ""
       }
-    case "necmo":
-      const {productId} = columnValue
+    case "id":
+      const {productId, id, quantity} = columnValue
       const handleRefundRequest = (productId) => {
-        const payloadRefund = {Id: productId, status: 4}
+        const payloadRefund = {
+          e: 4,
+          Id: id,
+        }
         store.dispatch(SetOrderStatus(payloadRefund))
       }
       return <span onClick={() => handleRefundRequest(productId)}>X</span>

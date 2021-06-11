@@ -106,8 +106,9 @@ const ProductResults = ({}) => {
             }
           })
           .map((product, pos) => {
-            const {imageUrl, productName, price} = product
-            if (!imageUrl || !productName || price === "undefined") return null
+            const {imageUrl, productName, discountedPrice} = product
+            if (!imageUrl || !productName || discountedPrice === "undefined")
+              return null
 
             const configProduct = {
               ...product,

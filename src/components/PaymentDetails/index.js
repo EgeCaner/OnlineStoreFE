@@ -91,42 +91,83 @@ const PaymentDetails = () => {
     ) {
       return
     }
+    if (cartItems.length == 1) {
+      apiInstance
+        .post("/Order/Add", {
+          Quantity: cartItems[0].quantity,
+          Price: cartItems[0].quantity * cartItems[1].discountedPrice,
+          ProductId: cartItems[0].productId,
+        })
+        .then((res) => {
+          console.log(res)
+          const configOrder = {
+            orderTotal: total,
+            orderItems: cartItems.map((item) => {
+              const {
+                productId,
+                imageUrl,
+                productName,
+                discountedPrice,
+                quantity,
+              } = item
 
-    apiInstance
-      .post("/Order/Add", {
-        Quantity: cartItems[0].quantity,
-        Price: cartItems[0].quantity * cartItems[0].price,
-        ProductId: cartItems[0].productId,
-      })
-      .then((res) => {
-        console.log(res)
-      })
+              return {
+                productId,
+                imageUrl,
+                productName,
+                discountedPrice,
+                quantity,
+              }
+            }),
+          }
+          dispatch(saveOrderHistory(configOrder))
+          console.log(configOrder)
+        })
+    }
 
-    apiInstance
-      .post("/Order/Add", {
-        Quantity: cartItems[1].quantity,
-        Price: cartItems[1].quantity * cartItems[1].price,
-        ProductId: cartItems[1].productId,
-      })
-      .then((res) => {
-        console.log(res)
-        const configOrder = {
-          orderTotal: total,
-          orderItems: cartItems.map((item) => {
-            const {productId, imageUrl, productName, price, quantity} = item
+    if (cartItems.length == 2) {
+      apiInstance
+        .post("/Order/Add", {
+          Quantity: cartItems[0].quantity,
+          Price: cartItems[0].quantity * cartItems[0].discountedPrice,
+          ProductId: cartItems[0].productId,
+        })
+        .then((res) => {
+          console.log(res)
+        })
 
-            return {
-              productId,
-              imageUrl,
-              productName,
-              price,
-              quantity,
-            }
-          }),
-        }
-        dispatch(saveOrderHistory(configOrder))
-        console.log(configOrder)
-      })
+      apiInstance
+        .post("/Order/Add", {
+          Quantity: cartItems[1].quantity,
+          Price: cartItems[1].quantity * cartItems[1].discountedPrice,
+          ProductId: cartItems[1].productId,
+        })
+        .then((res) => {
+          console.log(res)
+          const configOrder = {
+            orderTotal: total,
+            orderItems: cartItems.map((item) => {
+              const {
+                productId,
+                imageUrl,
+                productName,
+                discountedPrice,
+                quantity,
+              } = item
+
+              return {
+                productId,
+                imageUrl,
+                productName,
+                discountedPrice,
+                quantity,
+              }
+            }),
+          }
+          dispatch(saveOrderHistory(configOrder))
+          console.log(configOrder)
+        })
+    }
   }
 
   const configCardElement = {

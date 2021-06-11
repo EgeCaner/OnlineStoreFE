@@ -42,7 +42,7 @@ const OrderDetails = (order) => {
     },
     {
       id: "quantity",
-      label: "Refund",
+      label: "Quantity",
     },
   ]
 
@@ -55,8 +55,7 @@ const OrderDetails = (order) => {
     dispatch(
       SetOrderStatus({
         e,
-        id,
-        quant,
+        Id: id,
       })
     )
     //this.props.handlePeriodChange(e);
@@ -77,6 +76,9 @@ const OrderDetails = (order) => {
             >
               <option value="0">Processing</option>
               <option value="1">Shipped</option>
+
+              <option value="3">Cancelled</option>
+              <option value="4">Refund Requested</option>
               <option value="2">Delivered</option>
               <option value="5">Refunded</option>
             </select>
@@ -92,6 +94,9 @@ const OrderDetails = (order) => {
               <option value="1">Shipped</option>
               <option value="0">Processing</option>
               <option value="2">Delivered</option>
+
+              <option value="3">Cancelled</option>
+              <option value="4">Refund Requested</option>
               <option value="5">Refunded</option>
             </select>
           )
@@ -106,6 +111,43 @@ const OrderDetails = (order) => {
               <option value="2">Delivered</option>
               <option value="1">Shipped</option>
               <option value="0">Processing</option>
+
+              <option value="3">Cancelled</option>
+              <option value="4">Refund Requested</option>
+              <option value="5">Refunded</option>
+            </select>
+          )
+        else if (columnValue == "3")
+          return (
+            <select
+              name="option"
+              onChange={(val) =>
+                handleChange(val.target.value, orderId, orderQuantity)
+              }
+            >
+              <option value="2">Delivered</option>
+              <option value="1">Shipped</option>
+              <option value="0">Processing</option>
+
+              <option value="3">Cancelled</option>
+              <option value="4">Refund Requested</option>
+              <option value="5">Refunded</option>
+            </select>
+          )
+        else if (columnValue == "4")
+          return (
+            <select
+              name="option"
+              onChange={(val) =>
+                handleChange(val.target.value, orderId, orderQuantity)
+              }
+            >
+              <option value="2">Delivered</option>
+              <option value="1">Shipped</option>
+              <option value="0">Processing</option>
+
+              <option value="3">Cancelled</option>
+              <option value="4">Refund Requested</option>
               <option value="5">Refunded</option>
             </select>
           )
@@ -120,7 +162,10 @@ const OrderDetails = (order) => {
               <option value="5">Refunded</option>
               <option value="1">Shipped</option>
               <option value="0">Processing</option>
+              <option value="4">Refund Requested</option>
               <option value="2">Delivered</option>
+
+              <option value="3">Cancelled</option>
             </select>
           )
       case "price":
@@ -178,8 +223,7 @@ const OrderDetails = (order) => {
             {columns.map((col, pos) => {
               return (
                 <TableCell key={pos} style={styles}>
-                  
-                  {col.label }
+                  {col.label}
                 </TableCell>
               )
             })}
@@ -210,7 +254,13 @@ const OrderDetails = (order) => {
 
                     return (
                       <TableCell key={pos} style={styles}>
-                        {formatText(columnName, columnValue, orderId, orderQuantity,productId)}
+                        {formatText(
+                          columnName,
+                          columnValue,
+                          orderId,
+                          orderQuantity,
+                          productId
+                        )}
                       </TableCell>
                     )
                   })}

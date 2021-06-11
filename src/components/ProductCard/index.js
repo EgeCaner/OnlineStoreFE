@@ -11,6 +11,7 @@ import {addProduct} from "./../../redux/Cart/cart.actions"
 import Button from "./../forms/Button"
 import StarRatingComponent from "react-star-rating-component"
 import "./styles.scss"
+import FormSelect from "./../forms/FormSelect2"
 
 const mapState = (state) => ({
   product: state.productsData.product,
@@ -18,6 +19,7 @@ const mapState = (state) => ({
 })
 
 let com = ""
+let nextFilter = 0
 
 const ProductCard = ({}) => {
   const dispatch = useDispatch()
@@ -25,7 +27,7 @@ const ProductCard = ({}) => {
   const {productId} = useParams()
   const {product, comments} = useSelector(mapState)
 
-  const {imageUrl, productName, price, description, rating} = product
+  const {imageUrl, productName, discountedPrice, description, rating} = product
 
   useEffect(() => {
     dispatch(fetchProductStart(productId))
@@ -51,6 +53,40 @@ const ProductCard = ({}) => {
     com = comments.target.value
   }
 
+  const handleFilter = (comments) => {
+    nextFilter = comments.target.value
+  }
+
+  const configFilters = {
+    options: [
+      {
+        name: "0",
+        value: "0",
+      },
+      {
+        name: "1",
+        value: "1",
+      },
+      {
+        name: "2",
+        value: "2",
+      },
+      {
+        name: "3",
+        value: "3",
+      },
+      {
+        name: "4",
+        value: "4",
+      },
+      {
+        name: "5",
+        value: "5",
+      },
+    ],
+    handleChange: handleFilter,
+  }
+
   return (
     <div className="productCard">
       <div className="hero">
@@ -62,7 +98,7 @@ const ProductCard = ({}) => {
             <h1>{productName}</h1>
           </li>
           <li>
-            <span>£{price}</span>
+            <span>£{discountedPrice}</span>
           </li>
           <li>
             <div className="addToCart">
@@ -110,6 +146,7 @@ const ProductCard = ({}) => {
           onChange={handleAddComments}
         />
       </form>
+      <FormSelect {...configFilters} handleFilter />
       <Button
         className="button"
         onClick={() =>
@@ -118,6 +155,7 @@ const ProductCard = ({}) => {
               commentorName: "bariscan",
               description: com,
               ProductId: productId,
+              like: nextFilter,
             })
           )
         }

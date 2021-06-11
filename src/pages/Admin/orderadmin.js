@@ -12,7 +12,10 @@ const Order = () => {
   const {id} = useParams()
   const dispatch = useDispatch()
   const {orderDetails} = useSelector(mapState)
-  const {price} = orderDetails
+  let price = 0
+  if (orderDetails != undefined) {
+    const {price} = orderDetails
+  }
 
   useEffect(() => {
     dispatch(getOrderDetailsStart(id))
