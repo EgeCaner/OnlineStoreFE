@@ -32,7 +32,7 @@ const styles = {
   width: "10%",
 }
 
-const formatText = (columnName, columnValue,status) => {
+const formatText = (columnName, columnValue, status) => {
   switch (columnName) {
     case "Status":
       return `Status: ${status}`
@@ -45,7 +45,7 @@ const formatText = (columnName, columnValue,status) => {
 
 const OrderAdminHistory = ({orders}) => {
   const history = useHistory()
-  //console.log('sa',orders.length)
+  console.log("sa", orders.length)
 
   return (
     <TableContainer>
@@ -65,7 +65,6 @@ const OrderAdminHistory = ({orders}) => {
         </TableHead>
 
         <TableBody>
-            
           {Array.isArray(orders.data) &&
             orders.data.length > 0 &&
             orders.data.map((row, pos) => {
@@ -79,9 +78,12 @@ const OrderAdminHistory = ({orders}) => {
                     const columnName = column.id
                     const columnValue = row[columnName]
                     const status2 = row.status
-                    const formattedText = formatText(columnName, columnValue, status2)
-                    console.log('col:',columnName)
-                        console.log('sol:',status)
+                    const formattedText = formatText(
+                      columnName,
+                      columnValue,
+                      status2
+                    )
+
                     return (
                       <TableCell key={pos} style={styles}>
                         {formattedText}

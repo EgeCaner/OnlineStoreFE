@@ -30,6 +30,7 @@ import Payment from "./pages/Payment"
 import Order from "./pages/Order"
 import Analytics from "./pages/Analytics/index"
 import OrderAdmin from "./pages/Admin/orderadmin"
+import CommentsManager from "./pages/Admin/CommentsManager.js"
 
 import Orders from "./pages/Admin/orders"
 import "./default.scss"
@@ -146,18 +147,28 @@ const App = (props) => {
           render={() => (
             <WithAuth>
               <DashboardLayout>
-
                 <Order />
               </DashboardLayout>
             </WithAuth>
           )}
         />
-          <Route
+        <Route
           path="/orderadmin/:id"
           render={() => (
             <WithAdminAuth>
               <DashboardLayout>
                 <OrderAdmin />
+              </DashboardLayout>
+            </WithAdminAuth>
+          )}
+        />
+        <Route
+          exact
+          path="/commentmanage"
+          render={() => (
+            <WithAdminAuth>
+              <DashboardLayout>
+                <CommentsManager />
               </DashboardLayout>
             </WithAdminAuth>
           )}
@@ -177,9 +188,9 @@ const App = (props) => {
           path="/orders"
           render={() => (
             <WithAdminAuth>
-            <MainLayout>
-              <Orders />
-            </MainLayout>
+              <MainLayout>
+                <Orders />
+              </MainLayout>
             </WithAdminAuth>
           )}
         />

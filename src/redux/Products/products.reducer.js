@@ -1,15 +1,15 @@
 import productsTypes from "./products.types"
-import productTypes from "./products.types"
 
 const INITIAL_STATE = {
   products: [],
   loading: false,
+  comments: [],
   product: {},
 }
 
 const productsReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case productTypes.SET_PRODUCTS:
+    case productsTypes.SET_PRODUCTS:
       return {
         ...state,
         products: action.payload,
@@ -19,10 +19,10 @@ const productsReducer = (state = INITIAL_STATE, action) => {
         ...state,
         product: action.payload,
       }
-    case productTypes.SET_COMMENTS:
+    case productsTypes.SET_COMMENTS:
       return {
         ...state,
-        comments: action.payload, //product: action.payload
+        comments: action.payload,
       }
 
     default:

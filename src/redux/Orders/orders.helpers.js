@@ -95,14 +95,14 @@ export const handleGetAllOrders = (  ) => {
     apiInstance
       .get(`Order/Getall`)
       .then((snap) => {
-        console.log("heyy",snap)
+        console.log("heyy", snap)
         let OrderDetailsdata = snap.data.data.filter((order) => {
           return order
         })
         const data = [...OrderDetailsdata]
 
         resolve({
-         data,
+          data,
         })
       })
       .catch((err) => {

@@ -9,7 +9,11 @@ import {
   TableCell,
 } from "@material-ui/core"
 import {useDispatch} from "react-redux"
-import {setOrderDetails} from "./../../redux/Orders/orders.actions"
+import {
+  setOrderDetails,
+  SetOrderStatus,
+} from "./../../redux/Orders/orders.actions"
+import {store} from "./../../redux/createStore"
 import {useSelector} from "react-redux"
 import {apiInstance} from "./../../Utils"
 import {handleFetchProduct} from "./../../redux/Products/products.helpers"
@@ -37,44 +41,15 @@ const columns = [
     id: "quantity",
     label: "Amount",
   },
-  /*   {
-    id: "categoryId",
-    label: "Refund",
-  }, */
+  {
+    id: "necmo",
+    label: "Refund Request",
+  },
 ]
 
 const styles = {
   fontSize: "16px",
   width: "10%",
-}
-
-const formatText = (columnName, columnValue) => {
-  switch (columnName) {
-    case "status":
-      if (columnValue == "0") return `Processing...`
-      else if (columnValue == "1") return "Shipped..."
-      else if (columnValue == "2") return "Delivered..."
-      else if (columnValue == "3") return "Refund Request Sent..."
-    /* else if (columnValue == "4") return "Refunded..."*/
-    case "price":
-      return `£${columnValue}`
-    case "productId":
-      if (columnValue) {
-        const {imageUrl} = columnValue
-        return <img src={imageUrl} width={250} />
-      } else {
-        return ""
-      }
-    case "imageUrl":
-      if (columnValue) {
-        const {productName} = columnValue
-        return `${productName}`
-      } else {
-        return ""
-      }
-    default:
-      return columnValue
-  }
 }
 
 const OrderDetails = (order) => {
@@ -128,10 +103,13 @@ const OrderDetails = (order) => {
                   {columns.map((col, pos) => {
                     const columnName = col.id
                     let columnValue = row[columnName]
-                    if (columnName == "productId" || columnName == "imageUrl") {
+                    if (
+                      columnName == "productId" ||
+                      columnName == "imageUrl" ||
+                      columnName == "necmo"
+                    ) {
                       columnValue = theProduct
                     }
-
                     return (
                       <TableCell key={pos} style={styles}>
                         {formatText(columnName, columnValue)}
@@ -145,6 +123,42 @@ const OrderDetails = (order) => {
       </Table>
     </TableContainer>
   )
+}
+
+const formatText = (columnName, columnValue) => {
+  switch (columnName) {
+    case "status":
+      if (columnValue == "0") return `Processing...`
+      else if (columnValue == "1") return "Shipped..."
+      else if (columnValue == "2") return "Delivered..."
+      else if (columnValue == "4") return "Refund Request Sent..."
+      else if (columnValue == "5") return "Refunded..."
+    case "price":
+      return `£${columnValue}`
+    case "productId":
+      if (columnValue) {
+        const {imageUrl} = columnValue
+        return <img src={imageUrl} width={250} />
+      } else {
+        return ""
+      }
+    case "imageUrl":
+      if (columnValue) {
+        const {productName} = columnValue
+        return `${productName}`
+      } else {
+        return ""
+      }
+    case "necmo":
+      const {productId} = columnValue
+      const handleRefundRequest = (productId) => {
+        const payloadRefund = {Id: productId, status: 4}
+        store.dispatch(SetOrderStatus(payloadRefund))
+      }
+      return <span onClick={() => handleRefundRequest(productId)}>X</span>
+    default:
+      return columnValue
+  }
 }
 
 export default OrderDetails
